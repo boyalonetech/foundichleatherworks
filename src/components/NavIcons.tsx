@@ -17,6 +17,7 @@ const NavIcons = () => {
   const [customImage, setCustomImage] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const pathName = usePathname();
 
@@ -25,12 +26,10 @@ const NavIcons = () => {
 
   const { cart, counter, getCart } = useCartStore();
 
-  // Fetch cart on load
   useEffect(() => {
     getCart(wixClient);
   }, [wixClient, getCart]);
 
-  // Load custom profile image from localStorage when logged in changes
   useEffect(() => {
     if (isLoggedIn) {
       const storedImage = localStorage.getItem("customProfileImage");
@@ -44,7 +43,6 @@ const NavIcons = () => {
     }
   }, [isLoggedIn]);
 
-  // Fetch logged-in user
   useEffect(() => {
     const fetchMember = async () => {
       try {
@@ -62,7 +60,32 @@ const NavIcons = () => {
     }
   }, [wixClient, isLoggedIn]);
 
-  // Handle profile image upload
+  // Close profile dropdown on outside click or scroll
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsProfileOpen(false);
+      }
+    };
+
+    const handleScroll = () => {
+      setIsProfileOpen(false);
+    };
+
+    if (isProfileOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      window.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isProfileOpen]);
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -90,15 +113,16 @@ const NavIcons = () => {
 
   const handleLogout = async () => {
     setIsLoading(true);
-
-    // Reset customImage state but DO NOT clear localStorage
     setCustomImage(null);
-
     Cookies.remove("refreshToken");
     const { logoutUrl } = await wixClient.auth.logout(window.location.href);
     setIsLoading(false);
     setIsProfileOpen(false);
     router.push(logoutUrl);
+  };
+
+  const cartPage = () => {
+    window.location.href = "/cart";
   };
 
   return (
@@ -112,7 +136,7 @@ const NavIcons = () => {
       />
 
       <div
-        className="relative cursor-pointer"
+        className="relative cursor-pointer md:hidden lg:block"
         onClick={() => setIsCartOpen(!isCartOpen)}
       >
         <Image src="/cart.png" alt="Cart" width={22} height={22} />
@@ -121,13 +145,20 @@ const NavIcons = () => {
         </div>
       </div>
 
-      {isCartOpen && <CartModal />}
+      <div
+        className="relative cursor-pointer md:block lg:hidden"
+        onClick={cartPage}
+      >
+        <Image src="/cart.png" alt="Cart" width={22} height={22} />
+        <div className="absolute -top-3 -right-3 w-6 h-6 bg-found rounded-full text-white text-sm flex items-center justify-center scale-[0.7]">
+          {counter}
+        </div>
+      </div>
+
+      {isCartOpen && <CartModal onClose={() => setIsCartOpen(false)} />}
 
       <div className="relative cursor-pointer" onClick={handleProfile}>
-        <div
-          className="relative w-8 h-8 rounded-full overflow-visible border border-gray-300"
-          // overflow-visible here is important so pencil button outside is visible
-        >
+        <div className="relative w-8 h-8 rounded-full overflow-visible border border-gray-300">
           <Image
             src={customImage || "/profile.png"}
             alt="Profile"
@@ -137,9 +168,11 @@ const NavIcons = () => {
         </div>
       </div>
 
-      {/* Profile Dropdown */}
       {isProfileOpen && (
-        <div className="absolute p-4 rounded-md top-12 right-4 bg-white text-sm shadow-[0_3px_10px_rgb(0,0,0,0.2)] z-20 w-40">
+        <div
+          ref={dropdownRef}
+          className="absolute p-4 rounded-md top-12 right-4 bg-white text-sm shadow-[0_3px_10px_rgb(0,0,0,0.2)] z-20 w-40"
+        >
           <div className="relative w-20 h-20 mx-auto mb-2 rounded-full overflow-visible border border-gray-300">
             <Image
               src={customImage || member?.profile?.photo?.url || "/profile.png"}

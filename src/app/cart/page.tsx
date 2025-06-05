@@ -14,7 +14,7 @@ const CartPage = () => {
   };
 
   return (
-    <div className="min-h-screen px-4 py-8 md:px-12 lg:px-24 bg-white mt-[30%] md:mt-2">
+    <div className="min-h-screen px-4 py-8 md:px-12 lg:px-24 bg-white mt-[20%] md:mt-0">
       <h1 className="sm:text-3xl text-2xl  font-bold mb-8 flex gap-2 items-center">
         <Image src="/logo1.png" alt="logo" width={35} height={35} />
         Shopping Cart</h1>
@@ -45,9 +45,9 @@ const CartPage = () => {
                       <h3 className="sm:text-2xl font-semibold">
                         {item.productName?.original}
                       </h3>
-                      <div className="text-sm text-green-600 flex items-center gap-1">
+                      <div className="text-md text-green-600 flex items-center gap-3">
                         {item.quantity && item.quantity > 1 && (
-                          <span>{item.quantity} x</span>
+                          <span>{item.quantity}x</span>
                         )}
                         <span className="text-black font-bold sm:text-xl">₦{item.price?.amount}</span>
                         

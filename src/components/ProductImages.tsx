@@ -26,7 +26,7 @@ const ProductImages = ({items}:{items:any}) => {
           className="object-cover rounded-md"
         />
       </div>
-      <div className="flex justify-between gap-4">
+      <div className="flex justify-between gap-4 md:mt-6">
         {items.map((item:any , i:number) => (
           <div
             className="w-1/4 h-32 relative gap-4 mt-8 md:mt-0 cursor-pointer"

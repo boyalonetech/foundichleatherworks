@@ -2,15 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import CartModalMobile from "./CartModalMobile";
 import { useState, useEffect, useRef } from "react";
 import { useCartStore } from "@/hooks/useCartStore";
 import { useWixClient } from "@/hooks/useWixClient";
+import { Router } from "next/router";
 
 const Menu = () => {
   const [open, setOpen] = useState(false);
   const { counter } = useCartStore();
-  const [isCartOpenMobile, setIsCartOpenMobile] = useState(false);
   const [customImage, setCustomImage] = useState<string | null>(null);
   const [member, setMember] = useState<any>(null);
 
@@ -68,6 +67,10 @@ const Menu = () => {
       setMember(null);
     }
   }, [isLoggedIn, wixClient]);
+
+  const cartPage = () => {
+    window.location.href="/cart";
+  }
 
   return (
     <div>
@@ -196,7 +199,7 @@ const Menu = () => {
 
         <div
           className="relative cursor-pointer flex gap-4"
-          onClick={() => setIsCartOpenMobile((prev) => !prev)}
+          onClick={cartPage}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -215,9 +218,6 @@ const Menu = () => {
           </div>
         </div>
 
-        {isCartOpenMobile && (
-          <CartModalMobile onClose={() => setIsCartOpenMobile(false)} />
-        )}
 
         <Link href="/profile">
           <span

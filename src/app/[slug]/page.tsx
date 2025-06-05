@@ -27,7 +27,7 @@ const SinglePage = async ({ params }: PageProps) => {
   const product = products.items[0];
 
   return (
-    <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative flex flex-col lg:flex-row gap-16 md:mt-[9%]">
+    <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative flex flex-col lg:flex-row gap-16 mt-[5%] md:mt-2">
       {/* IMG */}
       <div className="w-full lg:w-1/2 lg:sticky top-20 h-max mt-[35%] md:mt-1">
         <ProductImages items={product.media?.items} />
@@ -37,7 +37,7 @@ const SinglePage = async ({ params }: PageProps) => {
         <h1 className="text-4xl font-medium">{product.name}</h1>
 
         <div
-          className="text-gray-500"
+          className="text-gray-900"
           dangerouslySetInnerHTML={{ __html: product.description ?? "" }}
         />
 
@@ -56,7 +56,7 @@ const SinglePage = async ({ params }: PageProps) => {
           </div>
         )}
 
-        <div className="h-[2px] bg-gray-100" />
+        <div className="h-[2px] bg-gray-100"/>
 
         {product.variants && product.productOptions ? (
           <CustomizeProducts
