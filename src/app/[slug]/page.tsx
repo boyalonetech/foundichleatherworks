@@ -1,23 +1,30 @@
-"use server";
-
 import Add from "@/components/Add";
 import CustomizeProducts from "@/components/CustomizeProduct";
 import ProductImages from "@/components/ProductImages";
 import { wixClientServer } from "@/lib/wixClientServer";
 import { notFound } from "next/navigation";
 
-interface PageProps {
-  params: {
-    slug: string;
-  };
+// Static params for SSG
+export async function generateStaticParams() {
+  const wixClient = await wixClientServer();
+  const products = await wixClient.products.queryProducts().find();
+
+  return products.items.map((product) => ({
+    slug: product.slug,
+  }));
 }
 
-const SinglePage = async ({ params }: PageProps) => {
+export default async function SinglePage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const { slug } = params;
   const wixClient = await wixClientServer();
 
   const products = await wixClient.products
     .queryProducts()
-    .eq("slug", params.slug)
+    .eq("slug", slug)
     .find();
 
   if (!products.items[0]) {
@@ -28,11 +35,12 @@ const SinglePage = async ({ params }: PageProps) => {
 
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative flex flex-col lg:flex-row gap-16 mt-[5%] md:mt-2">
-      {/* IMG */}
+      {/* Images */}
       <div className="w-full lg:w-1/2 lg:sticky top-20 h-max mt-[35%] md:mt-1">
         <ProductImages items={product.media?.items} />
       </div>
-      {/* TEXTS */}
+
+      {/* Product Details */}
       <div className="w-full lg:w-1/2 flex flex-col gap-6 mt-8">
         <h1 className="text-4xl font-medium">{product.name}</h1>
 
@@ -43,6 +51,7 @@ const SinglePage = async ({ params }: PageProps) => {
 
         <div className="h-[2px] bg-gray-100" />
 
+        {/* Price */}
         {product.price?.price === product.price?.discountedPrice ? (
           <h2 className="font-medium text-2xl">₦{product.price?.price}</h2>
         ) : (
@@ -56,8 +65,9 @@ const SinglePage = async ({ params }: PageProps) => {
           </div>
         )}
 
-        <div className="h-[2px] bg-gray-100"/>
+        <div className="h-[2px] bg-gray-100" />
 
+        {/* Variants or Add to Cart */}
         {product.variants && product.productOptions ? (
           <CustomizeProducts
             productId={product._id!}
@@ -74,6 +84,7 @@ const SinglePage = async ({ params }: PageProps) => {
 
         <div className="h-[2px] bg-gray-100" />
 
+        {/* Additional Info */}
         {product.additionalInfoSections?.map((section: any) => (
           <div className="text-sm" key={section.title}>
             <h4 className="font-semibold mb-4">{section.title}</h4>
@@ -83,6 +94,4 @@ const SinglePage = async ({ params }: PageProps) => {
       </div>
     </div>
   );
-};
-
-export default SinglePage;
+}

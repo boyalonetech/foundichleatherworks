@@ -1,14 +1,23 @@
 "use client";
-import { useState } from "react";
+
+import { useState, ChangeEvent } from "react";
 import Script from "next/script";
-import { useCartStore } from "@/hooks/useCartStore";
 import Image from "next/image";
+import { useCartStore } from "@/hooks/useCartStore";
 import { media as wixMedia } from "@wix/sdk";
 
 const CheckoutPage = () => {
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const { cart } = useCartStore();
+
+  // Calculate subtotal
+  const subtotal =
+    cart?.lineItems?.reduce(
+      (sum, item) =>
+        Number(sum) + Number(item.price?.amount ?? 0) * Number(item.quantity ?? 1),
+      0
+    ) ?? 0;
 
   const [form, setForm] = useState({
     name: "",
@@ -17,42 +26,39 @@ const CheckoutPage = () => {
     notes: "",
   });
 
-  const handleChange = (e: any) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-const sendOrderDetails = async (reference: string) => {
-  const orderData = { form, cart, reference };
+  const sendOrderDetails = async (reference: string) => {
+    const orderData = { form, cart, reference };
 
-  // Send to Google Sheet
-  try {
-    await fetch("https://script.google.com/macros/s/AKfycbxTTrAfW96g045ol12tlKGqyy-cpX7-c0ddj3dBc7zwKn3Q3x0fOibrSimp8OXuSxrZ/exec", {
-      method: "POST",
-      body: JSON.stringify(orderData),
-    });
-  } catch (err) {
-    console.error("Failed to send to Google Sheet:", err);
-  }
+    try {
+      await fetch(
+        "https://script.google.com/macros/s/AKfycbxTTrAfW96g045ol12tlKGqyy-cpX7-c0ddj3dBc7zwKn3Q3x0fOibrSimp8OXuSxrZ/exec",
+        {
+          method: "POST",
+          body: JSON.stringify(orderData),
+        }
+      );
+    } catch (err) {
+      console.error("Failed to send to Google Sheet:", err);
+    }
 
-  // Store locally & redirect
-  localStorage.setItem("latestOrder", JSON.stringify(orderData));
-  window.location.href = "/orders";
-};
-
+    localStorage.setItem("latestOrder", JSON.stringify(orderData));
+    window.location.href = "/orders";
+  };
 
   const handlePay = () => {
     const paystackKey = process.env.NEXT_PUBLIC_PAYSTACK_KEY;
+
     if (!paystackKey) {
       alert("❗ Paystack public key not found");
       return;
     }
 
-    if (!(window as any).PaystackPop) {
-      alert("❗ PaystackPop is not available.");
-      return;
-    }
-
-    const amount = (cart?.subtotal?.amount ?? 0) * 100;
+    const amount = subtotal * 100;
     if (amount <= 0) {
       alert("❗ Invalid amount");
       return;
@@ -87,7 +93,10 @@ const sendOrderDetails = async (reference: string) => {
   };
 
   return (
-    <form onSubmit={(e) => e.preventDefault()} className="max-w-2xl mx-auto mt-[35%] md:mt-10 space-y-6 px-4">
+    <form
+      onSubmit={(e) => e.preventDefault()}
+      className="max-w-2xl mx-auto mt-[35%] md:mt-10 space-y-6 px-4"
+    >
       <Script
         src="https://js.paystack.co/v1/inline.js"
         strategy="afterInteractive"
@@ -123,7 +132,7 @@ const sendOrderDetails = async (reference: string) => {
       />
       <textarea
         name="notes"
-        placeholder="State, City , Address"
+        placeholder="State, City, Address"
         onChange={handleChange}
         className="w-full border p-2 py-3 resize-none"
         required
@@ -135,12 +144,11 @@ const sendOrderDetails = async (reference: string) => {
         cart.lineItems.map((item) => (
           <div key={item._id} className="flex gap-4 mb-4">
             <Image
-              src={wixMedia.getScaledToFillImageUrl(
-                item.image || "/product.png",
-                72,
-                96,
-                {}
-              )}
+              src={
+                item.image
+                  ? wixMedia.getScaledToFillImageUrl(item.image, 72, 96, {})
+                  : "/product.png"
+              }
               alt={item.productName?.original || "Product image"}
               width={72}
               height={96}
@@ -158,7 +166,7 @@ const sendOrderDetails = async (reference: string) => {
       )}
 
       <div className="text-right font-bold text-lg">
-        Subtotal: ₦{cart?.subtotal?.amount ?? 0}
+        Subtotal: ₦{subtotal}
       </div>
 
       <button
@@ -167,7 +175,7 @@ const sendOrderDetails = async (reference: string) => {
         className="bg-green-600 text-white px-4 py-2 w-full rounded-md disabled:opacity-50"
         disabled={!scriptLoaded || isProcessing}
       >
-        {isProcessing ? "Processing..." : `Pay ₦${cart?.subtotal?.amount ?? 0}`}
+        {isProcessing ? "Processing..." : `Pay ₦${subtotal}`}
       </button>
     </form>
   );
