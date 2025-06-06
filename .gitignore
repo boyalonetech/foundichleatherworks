@@ -21,7 +21,7 @@
 *.pem
 
 
-app/admin-dashboard-pretuosffxniuoijrglnogwmeqewdcsg/
+
 
 
 # debug
@@ -39,5 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-app/admin-dashboard-pretuosffxniuoijrglnogwmeqewdcsg/
+
+src/app/admin-dashboard-pretuosffxniuoijrglnogwmeqewdcsg/
+
+
+/src/components/AdminDashboard.tsx
+
+
 
