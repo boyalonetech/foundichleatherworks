@@ -34,8 +34,8 @@ const CartPage = () => {
                   <Image
                     src={wixMedia.getScaledToFillImageUrl(item.image, 96, 96, {})}
                     alt={item.productName?.original || "Product Image"}
-                    width={96}
-                    height={96}
+                    width={500}
+                    height={500}
                     className="object-cover rounded-md sm:w-[30%]"
                   />
                 )}
