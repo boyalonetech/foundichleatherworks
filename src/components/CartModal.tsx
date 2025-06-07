@@ -21,7 +21,10 @@ const CartModal = ({ onClose }: CartModalProps) => {
     const handleScroll = () => onClose();
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
         onClose();
       }
     };
@@ -52,17 +55,25 @@ const CartModal = ({ onClose }: CartModalProps) => {
               <div className="flex gap-4" key={item._id}>
                 {item.image && (
                   <Image
-                    src={wixMedia.getScaledToFillImageUrl(item.image, 72, 96, {})}
-                    alt=""
-                    width={72}
+                    src={wixMedia.getScaledToFillImageUrl(
+                      item.image,
+                      144,
+                      192,
+                      {}
+                    )} // double the resolution
+                    alt={item.productName?.original || "Product image"}
+                    width={75}
                     height={96}
+                    quality={100}
                     className="object-cover rounded-md"
                   />
                 )}
                 <div className="flex flex-col justify-between w-full">
                   <div>
                     <div className="flex items-center justify-between gap-8">
-                      <h3 className="font-semibold">{item.productName?.original}</h3>
+                      <h3 className="font-semibold">
+                        {item.productName?.original}
+                      </h3>
                       <div className="p-1 bg-gray-50 rounded-sm flex items-center gap-2">
                         {item.quantity && item.quantity > 1 && (
                           <div className="text-xs text-green-500">
@@ -100,7 +111,8 @@ const CartModal = ({ onClose }: CartModalProps) => {
                 {cart.lineItems.reduce(
                   (sum, item) =>
                     sum +
-                    Number(item.price?.amount || 0) * Number(item.quantity || 1),
+                    Number(item.price?.amount || 0) *
+                      Number(item.quantity || 1),
                   0
                 )}
               </span>

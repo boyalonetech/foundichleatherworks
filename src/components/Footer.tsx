@@ -11,7 +11,10 @@ const Footer = () => {
           <Link href="/">
             <div className="text-2xl tracking-wide font-bold">Foundich</div>
           </Link>{" "}
-          <p>14 Powerline, Ariaria International Market, Osisioma Ngwa, Aba 453113, Abia State, Nigeria</p>
+          <p>
+            14 Powerline, Ariaria International Market, Osisioma Ngwa, Aba
+            453113, Abia State, Nigeria
+          </p>
           <span className="font-[600] ">foundichleatherworks@gmail.com</span>
           <span className="font-semibold ">+2349074833734</span>
           <div className="flex gap-6">
@@ -49,9 +52,13 @@ const Footer = () => {
             <div className="flex flex-col gap-6">
               <Link href="/">Customer Service</Link>
               <Link href="/">My Account</Link>
-              <Link href="/">Find a Store</Link>
               <Link href="/">Legacy & Privacy</Link>
-              <Link href="/certification" className="hover:text-found">Certification</Link>
+              <Link href="/certification" className="hover:text-found">
+                Certification
+              </Link>
+              <Link href="/admin" className="flex gap-1 hover:text-found">
+                Admin
+              </Link>
             </div>
           </div>
         </div>
@@ -68,7 +75,9 @@ const Footer = () => {
               placeholder="Email Address"
               className="p-3 rounded-l-xl w-3/4 "
             />
-            <button className="w-1/4 bg-found text-white rounded-r-xl">JOIN</button>
+            <button className="w-1/4 bg-found text-white rounded-r-xl">
+              JOIN
+            </button>
           </div>
           <span className="font-semibold">Secure Payments</span>
           <div className="flex justify-between">
@@ -89,11 +98,11 @@ const Footer = () => {
             <span className="font-medium">Nigeria | English</span>
           </div>
         </div>
-          <div className="">
-            <span className="text-gray-500 mr-4 ">Currency</span>
-            <span className="font-medium">₦ | Nigerian Naira</span>
-          </div>
+        <div className="">
+          <span className="text-gray-500 mr-4 ">Currency</span>
+          <span className="font-medium">₦ | Nigerian Naira</span>
         </div>
+      </div>
     </div>
   );
 };

@@ -50,16 +50,7 @@ const Filter = () => {
           onChange={handleFilterChange}
         />
         </div>
-        {/* TODO: Filter Categories */}
-        <select
-          name="cat"
-          className="py-2 px-4 rounded-2xl text-xs font-medium bg-[#EBEDED] hidden sm:block"
-          onChange={handleFilterChange}
-        >
-          <option>Category</option>
-          <option value="">New Arrival</option>
-          <option value="">Popular</option>
-        </select>
+       
         <select
           name=""
           id=""
