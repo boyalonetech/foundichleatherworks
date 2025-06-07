@@ -14,7 +14,7 @@ const CartPage = () => {
   };
 
   return (
-    <div className="min-h-screen px-4 py-8 md:px-12 lg:px-24 bg-white mt-[20%] md:mt-0">
+    <div className="min-h-screen px-4 py-8 md:px-12 lg:px-24 bg-white mt-[15%] md:mt-0">
       <h1 className="sm:text-3xl text-2xl  font-bold mb-8 flex gap-2 items-center">
         <Image src="/logo1.png" alt="logo" width={35} height={35} />
         Shopping Cart</h1>

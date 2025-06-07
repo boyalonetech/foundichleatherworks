@@ -17,7 +17,7 @@ const config: Config = {
         found: "#f00",
       },
     },
-    plugins: [],
+    plugins: [require("@tailwindcss/line-clamp")],
   },
 };
 

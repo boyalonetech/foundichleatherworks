@@ -9,7 +9,7 @@ const ProductImages = ({ items }: { items: any }) => {
   return (
     <div>
       {/* Main Image */}
-      <div className="h-[400px] sm:h-[450px] md:h-[500px] relative mb-6">
+      <div className="h-[400px] sm:h-[450px] md:h-[500px] relative mb-4">
         <Image
           src={items[index].image?.url}
           alt="product"

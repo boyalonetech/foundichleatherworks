@@ -14,7 +14,7 @@ import {
 
 const AboutPage: React.FC = () => {
   return (
-    <main className="mt-[25%] md:mt-0 min-h-screen bg-gradient-to-br from-white via-gray-100 to-gray-200 text-neutral-900 px-6 py-12 md:px-16 lg:px-32">
+    <main className="mt-[15%] md:mt-0 min-h-screen bg-gradient-to-br from-white via-gray-100 to-gray-200 text-neutral-900 px-6 py-12 md:px-16 lg:px-32">
       {/* HERO */}
       <section className="relative mb-16">
         <div className="absolute -top-10 -left-10 w-48 h-48 bg-found opacity-20 rounded-full mix-blend-multiply animate-pulse"></div>
