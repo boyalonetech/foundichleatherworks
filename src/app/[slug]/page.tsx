@@ -12,12 +12,12 @@ interface PageProps {
   };
 }
 
-const SinglePage = async ({ params }: PageProps) => {
+export default async function SinglePage({ params }: PageProps) {
   const wixClient = await wixClientServer();
 
   const products = await wixClient.products
     .queryProducts()
-    .eq("slug", params.slug)
+    .eq("slug", params?.slug)
     .find();
 
   if (!products.items[0]) {
@@ -56,7 +56,7 @@ const SinglePage = async ({ params }: PageProps) => {
           </div>
         )}
 
-        <div className="h-[2px] bg-gray-100"/>
+        <div className="h-[2px] bg-gray-100" />
 
         {product.variants && product.productOptions ? (
           <CustomizeProducts
@@ -83,6 +83,4 @@ const SinglePage = async ({ params }: PageProps) => {
       </div>
     </div>
   );
-};
-
-export default SinglePage;
+}
