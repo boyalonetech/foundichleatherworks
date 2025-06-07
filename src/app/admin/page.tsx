@@ -4,11 +4,21 @@ import React, { useEffect, useState } from "react";
 import { AlertTriangle } from "lucide-react";
 import AdminDashboard from "@/components/AdminDashboard";
 
-export default function AdminLoginPage() {
+// app/admin/page.tsx
+import { getProductsInStock } from "@/lib/getProductsInStock";
+
+// const AdminPage = async () => {
+//   const productsInStock = await getProductsInStock();
+
+//   return <AdminDashboard productsInStock={productsInStock} />;
+// };
+
+const AdminLoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [productsInStock, setProductsInStock] = useState<any[]>([]);
 
   useEffect(() => {
     const loggedIn = localStorage.getItem("isAdminLoggedIn");
@@ -17,11 +27,21 @@ export default function AdminLoginPage() {
     }
   }, []);
 
+  useEffect(() => {
+    // Fetch products in stock when logged in
+    if (isLoggedIn) {
+      getProductsInStock().then((result) => {
+        // If getProductsInStock returns a number, wrap it in an array
+        setProductsInStock(Array.isArray(result) ? result : []);
+      });
+    }
+  }, [isLoggedIn]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
-    const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+    const adminPassword = process.env.NEXT_PUBLIC_ADMIN_ACCESS;
 
     if (email === adminEmail && password === adminPassword) {
       localStorage.setItem("isAdminLoggedIn", "true");
@@ -34,7 +54,7 @@ export default function AdminLoginPage() {
   };
 
   if (isLoggedIn) {
-    return <AdminDashboard productsInStock={100} />;
+    return <AdminDashboard productsInStock={productsInStock.length} />;
   }
 
   return (
@@ -89,4 +109,6 @@ export default function AdminLoginPage() {
       )}
     </div>
   );
-}
+};
+
+export default AdminLoginPage;
