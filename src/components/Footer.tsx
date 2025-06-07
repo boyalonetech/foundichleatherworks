@@ -51,7 +51,7 @@ const Footer = () => {
               <Link href="/">My Account</Link>
               <Link href="/">Find a Store</Link>
               <Link href="/">Legacy & Privacy</Link>
-              <Link href="/">Gift Card</Link>
+              <Link href="/certification" className="hover:text-found">Certification</Link>
             </div>
           </div>
         </div>

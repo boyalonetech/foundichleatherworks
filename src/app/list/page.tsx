@@ -14,7 +14,7 @@ const ListPage = async ({ searchParams }: { searchParams: any }) => {
   );
 
   return (
-    <div className="px-4 md:px-8 lg:px-16 xl:32 2xl:64 relative">
+    <div className="px-4 md:px-8 lg:px-16 xl:32 2xl:64 relative overflow-x-hidden">
       {/* CAMPAIGN */}
       <div className="hidden bg-gray-50 px-8 mt-5 sm:flex justify-between h-96 ">
         <div className="w-2/3 flex flex-col items-center justify-center gap-8">
@@ -37,10 +37,34 @@ const ListPage = async ({ searchParams }: { searchParams: any }) => {
           />
         </div>
       </div>
+      <div className="mt-[42%] block md:hidden overflow-hidden scale-[1.5] lg:hidden 2xl:hidden xl:hidden sm:hidden relative">
+        <Image
+          src="/photo-1653868250450-b83e6263d427.avif"
+          width={500}
+          height={500}
+          quality={90}
+          alt=""
+          className="w-full h-[25vh] filter brightness-75"
+        />
+
+        <div className="absolute inset-0 bg-black/30" />
+
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white gap-4 px-4">
+          <h1 className="font-bold text-xl">
+            Grab up to 50% off on <br /> Selected Products
+          </h1>
+          <Link href="/list?cat=all-products">
+            <button className="rounded-3xl bg-found text-white py-1 px-4 text-sm">
+              Buy Now
+            </button>
+          </Link>
+        </div>
+      </div>
+
       {/* FILTER */}
       <Filter />
       {/* PRODUCTS */}
-      <h1 className="mt-12 text-xl font-semibold">
+      <h1 className="md:mt-12 mt-8 text-2xl font-semibold">
         {cat?.collection?.name} For You!
       </h1>
       <Suspense fallback={<LoadingScreen />}>

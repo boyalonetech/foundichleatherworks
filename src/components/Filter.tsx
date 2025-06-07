@@ -22,7 +22,7 @@ const Filter = () => {
   };
 
   return (
-    <div className="mt-[40%] flex justify-between sm:mt-12">
+    <div className="mt-16 flex justify-between sm:mt-12">
       <div className="flex gap-6 flex-wrap">
         <select
           name="type"

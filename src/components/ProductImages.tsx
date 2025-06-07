@@ -10,9 +10,7 @@ import { useState } from "react";
 //   { id: 4, src: "/9062a50652fd552448ec72ac8eea2b89.jpg", alt: "image4" },
 // ];
 
-
-
-const ProductImages = ({items}:{items:any}) => {
+const ProductImages = ({ items }: { items: any }) => {
   const [index, setIndex] = useState(0);
 
   return (
@@ -21,13 +19,13 @@ const ProductImages = ({items}:{items:any}) => {
         <Image
           src={items[index].image?.url}
           alt="product"
-          fill
-          sizes="30vw"
+          width={1000}
+          height={1000}
           className="object-cover rounded-md"
         />
       </div>
       <div className="flex justify-between gap-4 md:mt-6">
-        {items.map((item:any , i:number) => (
+        {items.map((item: any, i: number) => (
           <div
             className="w-1/4 h-32 relative gap-4 mt-8 md:mt-0 cursor-pointer"
             key={item._id}
@@ -36,8 +34,8 @@ const ProductImages = ({items}:{items:any}) => {
             <Image
               src={item.image?.url}
               alt="product"
-              fill
-              sizes="30vw"
+              width={500}
+              height={500}
               className="object-cover rounded-md"
             />
           </div>

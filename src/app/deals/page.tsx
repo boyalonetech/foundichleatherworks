@@ -72,22 +72,9 @@ function useCountdown(targetDate: string): [number, number, number] {
   return [hours, minutes, seconds];
 }
 
-function Countdown({ endsAt }: { endsAt: string }) {
-  const [isClient, setIsClient] = useState(false);
-  const [hours, minutes, seconds] = useCountdown(endsAt);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) return <>Loading...</>;
-
-  return (
-    <>Ends in: {hours}h {minutes}m {seconds}s</>
-  );
-}
-
 function DealCard({ deal }: { deal: Deal }) {
+  const [hours, minutes, seconds] = useCountdown(deal.endsAt);
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
       <div className="relative">
@@ -116,7 +103,7 @@ function DealCard({ deal }: { deal: Deal }) {
         </div>
         <div className="flex justify-between items-center">
           <p className="text-sm text-gray-500 mt-2">
-            <Countdown endsAt={deal.endsAt} />
+            Ends in: {hours}h {minutes}m {seconds}s
           </p>
           <Link href="/list">
             <button className="p-2 text-white bg-found rounded-md">Get Now</button>
@@ -130,7 +117,7 @@ function DealCard({ deal }: { deal: Deal }) {
 export default function DealsPage() {
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-200 py-12 px-6 mt-[23%] md:mt-0">
-      <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-black mb-10 flex justify-center items-center">
+      <h1 className="text-3xl mdtext-4xl font-bold text-center text-gray-900 dark:text-black mb-10 flex justify-center items-center">
         <p className="animate-bounce">🔥</p> <p>Hot Deals</p>
       </h1>
 

@@ -99,7 +99,7 @@ const PaymentForm = () => {
     <div className="max-w-md mx-auto mt-10 space-y-4">
       <Script
         src="https://js.paystack.co/v1/inline.js"
-        strategy="beforeInteractive"
+        strategy="afterInteractive" // ✅ Fixed script strategy
         onLoad={() => setScriptLoaded(true)}
       />
       <input

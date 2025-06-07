@@ -1,55 +1,237 @@
+// import { Link } from "lucide-react";
+import  Link  from "next/link";
 import Image from "next/image";
 import React from "react";
+import {
+  FaLeaf,
+  FaStar,
+  FaGlobe,
+  FaHandshake,
+  FaAward,
+  FaClock,
+  FaRegStar,
+} from "react-icons/fa";
 
 const AboutPage: React.FC = () => {
   return (
-    <main className="min-h-screen bg-white text-black px-6 py-10 md:px-16 lg:px-32 mt-[30%] md:mt-2">
-      <section className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-6 text-found">Foundich Leather Works</h1>
-
-        <div className="">
-            <Image src="/Asset 3@3x.png" height={100} width={100} alt="" className="w-[100%] mb-[20%]" />
+    <main className="mt-[25%] md:mt-0 min-h-screen bg-gradient-to-br from-white via-gray-100 to-gray-200 text-neutral-900 px-6 py-12 md:px-16 lg:px-32">
+      {/* HERO */}
+      <section className="relative mb-16">
+        <div className="absolute -top-10 -left-10 w-48 h-48 bg-found opacity-20 rounded-full mix-blend-multiply animate-pulse"></div>
+        <div className="relative z-10 text-center">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4">
+            Foundich <span className="text-found">Leather</span> Works
+          </h1>
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+            Crafting luxury, one stitch at a time.
+          </p>
         </div>
+      </section>
 
-        <p className="text-lg mb-8">
-          Welcome to <strong>Foundich Leather Works</strong>, where tradition meets innovation in every stitch.
+      {/* OVERLAP IMAGE PANEL */}
+      <section className="relative mb-20">
+        <div className="relative z-10 w-full max-w-2xl mx-auto">
+          <Image
+            src="/Asset 3@3x.png"
+            width={1000}
+            height={800}
+            quality={90}
+            alt="Handcrafted Leather"
+            className="w-full h-auto rounded-2xl object-cover"
+          />
+        </div>
+      </section>
+
+      {/* INFO GRID */}
+      <section className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 mb-20">
+        {[
+          {
+            icon: <FaLeaf size={28} className="text-white" />,
+            title: "Sustainable Craft",
+            text: "Eco-friendly tanning & solar-powered workshops.",
+          },
+          {
+            icon: <FaStar size={28} className="text-white" />,
+            title: "Premium Quality",
+            text: "Hand-stitched by master artisans.",
+          },
+          {
+            icon: <FaGlobe size={28} className="text-white" />,
+            title: "Global Vision",
+            text: "Celebrating African heritage worldwide.",
+          },
+          {
+            icon: <FaHandshake size={28} className="text-white" />,
+            title: "Community First",
+            text: "Supporting local artisans & fair trade.",
+          },
+          {
+            icon: <FaAward size={28} className="text-white" />,
+            title: "Award Winning",
+            text: "Recognized for excellence in design.",
+          },
+          {
+            icon: <FaClock size={28} className="text-white" />,
+            title: "Timeless Design",
+            text: "Classic styles that never go out of fashion.",
+          },
+        ].map((block, i) => (
+          <div
+            key={i}
+            className="relative bg-white rounded-2xl mb-8 p-6 pt-16 shadow hover:shadow-[0px_5px_20px_rgba(0,0,0,0.3)] transition-shadow"
+          >
+            <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-found text-white p-3 rounded-full">
+              {block.icon}
+            </div>
+            <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-center">
+              {block.title}
+            </h3>
+            <p className="text-center text-gray-600 leading-relaxed">
+              {block.text}
+            </p>
+          </div>
+        ))}
+      </section>
+
+      {/* OUR VALUES */}
+      <section className="mb-20">
+        <h2 className="text-3xl md:text-4xl font-bold text-center md:mb-4 mb-8 text-found">
+          Our Core Values
+        </h2>
+        <div className="space-y-8 md:space-y-0 md:grid md:grid-cols-3 md:gap-8">
+          {[
+            {
+              title: "Integrity",
+              desc: "Honesty and transparency in every stitch.",
+            },
+            {
+              title: "Innovation",
+              desc: "Continuously refining our craft.",
+            },
+            {
+              title: "Sustainability",
+              desc: "Respect for people and planet.",
+            },
+          ].map((v, i) => (
+            <div key={i} className="bg-gray-50 p-6 rounded-xl shadow">
+              <h3 className="text-2xl font-semibold mb-2">{v.title}</h3>
+              <p className="text-gray-600">{v.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="mb-20">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-found">
+          What Our Customers Say
+        </h2>
+        <div className="space-y-8 md:space-y-0 md:flex md:gap-6 overflow-x-auto pb-4">
+          {[
+            {
+              name: "Amara Okeke",
+              quote:
+                "Absolutely stunning craftsmanship. My shoes feel like royalty!",
+              avatar: "/photo-1700561791890-a15d45b9c79d.avif",
+              rating: 5,
+            },
+            {
+              name: "Chinedu Nwosu",
+              quote:
+                "Best leather shoes I've ever owned—durable and so comfortable.",
+              avatar: "/photo-1654787707030-f716f370c602.avif",
+              rating: 4,
+            },
+            {
+              name: "Fatima Bello",
+              quote: "Love the eco-friendly approach. Stylish and sustainable!",
+              avatar: "/photo-1617244145995-f79f45448c5c.avif",
+              rating: 5,
+            },
+          ].map((t, i) => (
+            <div
+              key={i}
+              className="flex-shrink-0 w-80 bg-white p-6 rounded-2xl shadow hover:shadow-lg transition-shadow"
+            >
+              <div className="flex items-center mb-4 flex-col">
+                <div className="w-44 h-44 rounded-full overflow-hidden mb-2">
+                  <Image
+                    src={t.avatar}
+                    width={500}
+                    height={500}
+                    alt={t.name}
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+                <span className="font-semibold mb-2">{t.name}</span>
+                {/* Star Rating */}
+                <div className="flex">
+                  {Array.from({ length: 5 }).map((_, idx) =>
+                    idx < t.rating ? (
+                      <FaStar key={idx} className="text-yellow-400" />
+                    ) : (
+                      <FaRegStar key={idx} className="text-gray-300" />
+                    )
+                  )}
+                </div>
+              </div>
+              <p className="text-gray-700 italic">“{t.quote}”</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* MEET THE TEAM */}
+      <section className="mb-20">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-found">
+          Meet the Team
+        </h2>
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { name: "Ucheben", role: "Operations", img: "/ucheben.jpg" },
+            { name: "Emeka", role: "Designer", img: "/emeka.jpg" },
+            { name: "Divine", role: "Developer", img: "/divine.jpeg" },
+            { name: "Precious", role: "Marketing Lead", img: "/pressy.jpg" },
+          ].map((m, i) => (
+            <div key={i} className="text-center">
+              <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden shadow-lg">
+                <Image
+                  src={m.img}
+                  layout="fill"
+                  objectFit="cover"
+                  alt={m.name}
+                />
+              </div>
+              <h4 className="font-semibold">{m.name}</h4>
+              <p className="text-gray-600">{m.role}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CALL TO ACTION BANNER */}
+      <section className="mt-20 bg-found text-white rounded-3xl p-12 text-center relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20 mix-blend-screen animate-pulse">
+          <Image
+            src="/Asset 3@3x.png"
+            layout="fill"
+            objectFit="cover"
+            alt="Background"
+          />
+        </div>
+        <h2 className="relative text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+          Ready to Step Up Your Style?
+        </h2>
+        <p className="relative mb-6 max-w-xl mx-auto">
+          Discover our latest collection of handcrafted leather shoes—luxury
+          that lasts.
         </p>
-
-        <div className="space-y-8">
-          <div>
-            <h2 className="text-2xl font-semibold text-found mb-2">Who We Are</h2>
-            <p>
-              At Foundich, we are passionate artisans dedicated to crafting premium, handmade leather footwear
-              that stands the test of time. Based in Nigeria, our journey began with a simple vision: to redefine
-              African craftsmanship through quality, elegance, and originality.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-semibold text-found mb-2">What We Do</h2>
-            <p>
-              We specialize in designing and producing handcrafted leather shoes that blend comfort, durability,
-              and style. Each pair of shoes is meticulously made using the finest locally-sourced leather, designed
-              to elevate your everyday look and complement any occasion.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-semibold text-found mb-2">Our Mission</h2>
-            <p>
-              To empower the African fashion industry through world-class leather craftsmanship, offering affordable
-              luxury to every customer while supporting local artisans and sustainable practices.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-semibold text-found mb-2">Our Vision</h2>
-            <p>
-              To become a globally recognized name in leather fashion by creating timeless pieces that represent
-              African pride, creativity, and excellence.
-            </p>
-          </div>
-        </div>
+        <Link href="/list">
+          {" "}
+          <button className="relative bg-white text-found font-semibold py-3 px-8 rounded-full shadow-lg hover:scale-105 transition-transform">
+            Shop Now
+          </button>
+        </Link>
       </section>
     </main>
   );
