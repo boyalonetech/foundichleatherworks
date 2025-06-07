@@ -7,9 +7,7 @@ import { wixClientServer } from "@/lib/wixClientServer";
 import { notFound } from "next/navigation";
 
 interface PageProps {
-  params: {
-    slug: string;
-  };
+  params: Promise<{ slug: string }>
 }
 
 export default async function SinglePage({ params }: PageProps) {
@@ -17,7 +15,7 @@ export default async function SinglePage({ params }: PageProps) {
 
   const products = await wixClient.products
     .queryProducts()
-    .eq("slug", params?.slug)
+    .eq("slug", (await params)?.slug)
     .find();
 
   if (!products.items[0]) {
