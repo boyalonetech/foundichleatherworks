@@ -41,7 +41,7 @@ const AdminLoginPage = () => {
     e.preventDefault();
 
     const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
-    const adminPassword = process.env.NEXT_PUBLIC_ADMIN_ACCESS;
+    const adminPassword = process.env.NEXT_PUBLIC_ADMIN_GET;
 
     if (email === adminEmail && password === adminPassword) {
       localStorage.setItem("isAdminLoggedIn", "true");
