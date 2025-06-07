@@ -4,15 +4,6 @@ import React, { useEffect, useState } from "react";
 import { AlertTriangle } from "lucide-react";
 import AdminDashboard from "@/components/AdminDashboard";
 
-// app/admin/page.tsx
-import { getProductsInStock } from "@/lib/getProductsInStock";
-
-// const AdminPage = async () => {
-//   const productsInStock = await getProductsInStock();
-
-//   return <AdminDashboard productsInStock={productsInStock} />;
-// };
-
 const AdminLoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,12 +19,16 @@ const AdminLoginPage = () => {
   }, []);
 
   useEffect(() => {
-    // Fetch products in stock when logged in
     if (isLoggedIn) {
-      getProductsInStock().then((result) => {
-        // If getProductsInStock returns a number, wrap it in an array
-        setProductsInStock(Array.isArray(result) ? result : []);
-      });
+      fetch("/api/get-products-in-stock")
+        .then((res) => res.json())
+        .then((data) => {
+          setProductsInStock(Array.isArray(data) ? data : []);
+        })
+        .catch((err) => {
+          console.error("Failed to fetch products:", err);
+          setProductsInStock([]);
+        });
     }
   }, [isLoggedIn]);
 
