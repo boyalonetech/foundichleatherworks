@@ -17,35 +17,33 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex gap-2 items-center">
+<form
+  className="flex items-center gap-4 w-screen px-5 py-[6px] bg-gray-200 rounded-2xl"
+  onSubmit={handleSearch}
+>
+  <input
+    type="text"
+    name="name"
+    placeholder="Search"
+    className="flex-1 py-[2%] bg-transparent outline-none text-base"
+  />
+  <button type="submit" className="cursor-pointer">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="25px"
+      height="25px"
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M14.385 15.446a6.75 6.75 0 1 1 1.06-1.06l5.156 5.155a.75.75 0 1 1-1.06 1.06zm-7.926-1.562a5.25 5.25 0 1 1 7.43-.005l-.005.005l-.005.004a5.25 5.25 0 0 1-7.42-.004"
+        clipRule="evenodd"
+      />
+    </svg>
+  </button>
+</form>
 
-      <form
-        className="flex items-center justify-between gap-4 bg-gray-200 p-[6px] px-5 rounded-2xl "
-        onSubmit={handleSearch}
-      >
-        <input
-          type="text"
-          name="name"
-          placeholder="Search"
-          className="flex-1 w-[25.5%] bg-transparent outline-none"
-        />
-        <button className="cursor-pointer">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20px"
-            height="20px"
-            viewBox="0 0 24 24"
-          >
-            <path
-              fill="currentColor"
-              fillRule="evenodd"
-              d="M14.385 15.446a6.75 6.75 0 1 1 1.06-1.06l5.156 5.155a.75.75 0 1 1-1.06 1.06zm-7.926-1.562a5.25 5.25 0 1 1 7.43-.005l-.005.005l-.005.004a5.25 5.25 0 0 1-7.42-.004"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
-      </form>
-    </div>
   );
 };
 

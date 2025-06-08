@@ -87,8 +87,8 @@ const Menu = () => {
       {/* Menu wrapper always rendered for animation */}
       <div
         ref={menuRef}
-        className={`fixed top-20 right-0 w-[100%] max-w-[100%] h-[calc(70vh-80px)] bg-white text-black
-          flex flex-col pl-7 justify-center gap-8 text-xl shadow-xl z-10
+        className={`fixed top-20 right-0 w-[100%] max-w-[100%] h-[calc(62vh-80px)] bg-white text-black
+          flex flex-col pl-7 justify-center gap-8 text-xl  z-10 pop
           transform transition-transform duration-300 ease-in-out
           ${open ? "translate-x-0" : "translate-x-full"}
         `}
@@ -156,27 +156,6 @@ const Menu = () => {
           </span>
         </Link>
 
-        <Link href="/about">
-          <span
-            className="flex items-center gap-4"
-            onClick={() => setOpen(false)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="25"
-              viewBox="0 0 512 512"
-            >
-              <path
-                fill="red"
-                fillRule="evenodd"
-                d="M256 42.667c117.822 0 213.334 95.512 213.334 213.333c0 117.82-95.512 213.334-213.334 213.334c-117.82 0-213.333-95.513-213.333-213.334S138.18 42.667 256 42.667m21.38 192h-42.666v128h42.666zM256.217 144c-15.554 0-26.837 11.22-26.837 26.371c0 15.764 10.986 26.963 26.837 26.963c15.235 0 26.497-11.2 26.497-26.667c0-15.446-11.262-26.667-26.497-26.667"
-              />
-            </svg>
-            About
-          </span>
-        </Link>
-
         <Link href="/contact">
           <span
             className="flex items-center gap-4"
@@ -197,6 +176,26 @@ const Menu = () => {
           </span>
         </Link>
 
+        <Link href="/about">
+          <span
+            className="flex items-center gap-4"
+            onClick={() => setOpen(false)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="25"
+              height="25"
+              viewBox="0 0 512 512"
+            >
+              <path
+                fill="red"
+                fillRule="evenodd"
+                d="M256 42.667c117.822 0 213.334 95.512 213.334 213.333c0 117.82-95.512 213.334-213.334 213.334c-117.82 0-213.333-95.513-213.333-213.334S138.18 42.667 256 42.667m21.38 192h-42.666v128h42.666zM256.217 144c-15.554 0-26.837 11.22-26.837 26.371c0 15.764 10.986 26.963 26.837 26.963c15.235 0 26.497-11.2 26.497-26.667c0-15.446-11.262-26.667-26.497-26.667"
+              />
+            </svg>
+            About
+          </span>
+        </Link>
         <div className="relative cursor-pointer flex gap-4" onClick={cartPage}>
           <svg
             xmlns="http://www.w3.org/2000/svg"

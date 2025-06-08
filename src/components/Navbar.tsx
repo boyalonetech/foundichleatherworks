@@ -14,9 +14,9 @@ const Navbar = () => {
   const [isSearch, setIsSearch] = useState(false);
 
   return (
-    <div className="h-[10vh] md:h-24 lg:h-[10vh] px-4 md:px-8 shadow-[0_2px_3px_rgba(0,0,0,0.4)] fixed md:static top-0 left-0 w-full z-50 bg-white md:relative">
+    <div className="h-[10vh] md:h-24 lg:h-[10vh] px-4 md:px-8 shadow-[0_2px_3px_rgba(0,0,0,0.4)] fixed md:static top-0 left-0 w-full z-50 bg-white md:relative flex flex-col justify-center">
       {/* MOBILE */}
-      <div className="flex flex-col mt-6 md:mt-0">
+      {/* <div className=" mt-6 md:mt-0"> */}
         {/* Only show when search is not active */}
         {!isSearch && (
           <div className="h-full flex items-center justify-between md:hidden nav">
@@ -54,7 +54,7 @@ const Navbar = () => {
             <button
               type="button"
               onClick={() => setIsSearch(false)}
-              className="ml-2 p-1 rounded-full hover:bg-gray-300 text-gray-600"
+              className="ml-2 p-2 rounded-full hover:bg-gray-300 text-gray-600"
               title="Cancel"
             >
               {/* Cancel Icon */}
@@ -74,7 +74,7 @@ const Navbar = () => {
             <SearchBarMobile />
           </div>
         )}
-      </div>
+      {/* </div> */}
 
       {/* BIGGER SCREENS */}
       <div className="hidden md:flex items-center h-full justify-between gap-8">
