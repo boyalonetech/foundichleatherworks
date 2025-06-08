@@ -1,4 +1,5 @@
-import Link from "next/link";
+// import { Link } from "lucide-react";
+import  Link  from "next/link";
 import Image from "next/image";
 import React from "react";
 import {
@@ -13,11 +14,11 @@ import {
 
 const AboutPage: React.FC = () => {
   return (
-    <main className="mt-16 md:mt-0 min-h-screen bg-gradient-to-br from-white via-gray-100 to-gray-200 text-neutral-900 px-4 sm:px-6 md:px-16 lg:px-32 py-10">
+    <main className="mt-[15%] md:mt-0 min-h-screen bg-gradient-to-br from-white via-gray-100 to-gray-200 text-neutral-900 px-6 py-12 md:px-16 lg:px-32">
       {/* HERO */}
       <section className="relative mb-16">
-        <div className="absolute -top-10 -left-10 w-48 h-48 bg-found opacity-20 rounded-full mix-blend-multiply animate-pulse" />
-        <div className="relative z-10 text-center px-2">
+        <div className="absolute -top-10 -left-10 w-48 h-48 bg-found opacity-20 rounded-full mix-blend-multiply animate-pulse"></div>
+        <div className="relative z-10 text-center">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4">
             Foundich <span className="text-found">Leather</span> Works
           </h1>
@@ -28,8 +29,8 @@ const AboutPage: React.FC = () => {
       </section>
 
       {/* OVERLAP IMAGE PANEL */}
-      <section className="relative mb-20 sm:mb-24">
-        <div className="relative z-10 w-full max-w-xl mx-auto px-2">
+      <section className="relative mb-20">
+        <div className="relative z-10 w-full max-w-2xl mx-auto">
           <Image
             src="/Asset 3@3x.png"
             width={1000}
@@ -42,7 +43,7 @@ const AboutPage: React.FC = () => {
       </section>
 
       {/* INFO GRID */}
-      <section className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 mb-20">
+      <section className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 mb-20">
         {[
           {
             icon: <FaLeaf size={28} className="text-white" />,
@@ -77,9 +78,9 @@ const AboutPage: React.FC = () => {
         ].map((block, i) => (
           <div
             key={i}
-            className="relative bg-white rounded-2xl p-6 pt-16 shadow hover:shadow-[0px_5px_20px_rgba(0,0,0,0.3)] transition-shadow"
+            className="relative bg-white rounded-2xl mb-8 p-6 pt-16 shadow hover:shadow-[0px_5px_20px_rgba(0,0,0,0.3)] transition-shadow"
           >
-            <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-found text-white p-4 rounded-full">
+            <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-found text-white p-3 rounded-full">
               {block.icon}
             </div>
             <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-center">
@@ -94,10 +95,10 @@ const AboutPage: React.FC = () => {
 
       {/* OUR VALUES */}
       <section className="mb-20">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-found">
+        <h2 className="text-3xl md:text-4xl font-bold text-center md:mb-4 mb-8 text-found">
           Our Core Values
         </h2>
-        <div className="space-y-6 md:space-y-0 md:grid md:grid-cols-3 md:gap-8 px-2">
+        <div className="space-y-8 md:space-y-0 md:grid md:grid-cols-3 md:gap-8">
           {[
             {
               title: "Integrity",
@@ -113,21 +114,19 @@ const AboutPage: React.FC = () => {
             },
           ].map((v, i) => (
             <div key={i} className="bg-gray-50 p-6 rounded-xl shadow">
-              <h3 className="text-2xl font-semibold mb-2 text-center">
-                {v.title}
-              </h3>
-              <p className="text-gray-600 text-center">{v.desc}</p>
+              <h3 className="text-2xl font-semibold mb-2">{v.title}</h3>
+              <p className="text-gray-600">{v.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="mb-20 px-2 sm:px-4">
+      <section className="mb-20">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-found">
           What Our Customers Say
         </h2>
-        <div className="flex flex-wrap justify-center gap-6">
+        <div className="space-y-8 md:space-y-0 md:flex md:gap-6 overflow-x-auto pb-4">
           {[
             {
               name: "Amara Okeke",
@@ -152,10 +151,10 @@ const AboutPage: React.FC = () => {
           ].map((t, i) => (
             <div
               key={i}
-              className="w-full sm:w-80 bg-white p-6 rounded-2xl shadow hover:shadow-lg transition-shadow"
+              className="flex-shrink-0 w-50 sm:w-80 bg-white p-6 rounded-2xl shadow hover:shadow-lg transition-shadow"
             >
               <div className="flex items-center mb-4 flex-col">
-                <div className="w-32 h-32 rounded-full overflow-hidden mb-2">
+                <div className="w-44 h-44 rounded-full overflow-hidden mb-2">
                   <Image
                     src={t.avatar}
                     width={500}
@@ -165,6 +164,7 @@ const AboutPage: React.FC = () => {
                   />
                 </div>
                 <span className="font-semibold mb-2">{t.name}</span>
+                {/* Star Rating */}
                 <div className="flex">
                   {Array.from({ length: 5 }).map((_, idx) =>
                     idx < t.rating ? (
@@ -186,15 +186,15 @@ const AboutPage: React.FC = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-found">
           Meet the Team
         </h2>
-        <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 px-2 team">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 team">
           {[
             { name: "Ucheben", role: "Operations", img: "/ucheben.jpg" },
-            { name: "Victor", role: "Designer", img: "/emeka.jpg" },
+            { name: "Emeka", role: "Designer", img: "/emeka.jpg" },
             { name: "Divine", role: "Developer", img: "/divine.jpeg" },
             { name: "Precious", role: "Marketing Lead", img: "/pressy.jpg" },
           ].map((m, i) => (
             <div key={i} className="text-center">
-              <div className="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-4 rounded-full overflow-hidden shadow-lg">
+              <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden shadow-lg">
                 <Image
                   src={m.img}
                   layout="fill"
@@ -210,7 +210,7 @@ const AboutPage: React.FC = () => {
       </section>
 
       {/* CALL TO ACTION BANNER */}
-      <section className="mt-20 bg-found text-white rounded-3xl px-6 py-12 sm:px-12 text-center relative overflow-hidden">
+      <section className="mt-20 bg-found text-white rounded-3xl p-12 text-center relative overflow-hidden">
         <div className="absolute inset-0 opacity-20 mix-blend-screen animate-pulse">
           <Image
             src="/Asset 3@3x.png"
@@ -227,6 +227,7 @@ const AboutPage: React.FC = () => {
           that lasts.
         </p>
         <Link href="/list">
+          {" "}
           <button className="relative bg-white text-found font-semibold py-3 px-8 rounded-full shadow-lg hover:scale-105 transition-transform">
             Shop Now
           </button>
