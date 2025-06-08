@@ -118,8 +118,6 @@ const LoginPage = () => {
           }
         case LoginState.EMAIL_VERIFICATION_REQUIRED:
           setMode(MODE.LOGIN);
-        // case LoginState.OWNER_APPROVAL_REQUIRED:
-        //   setMessage("Your account is pending approval");
         default:
           break;
       }
@@ -132,13 +130,14 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="mt-10  h-[calc(100vh-80px)] px-4 md:px-8 flex items-center justify-center md:mt-5 lg:mt-5">
+    <div className="mt-10 h-[calc(100vh-80px)] px-4 md:px-8 flex items-center justify-center md:mt-5 lg:mt-5">
       <form
         className="flex flex-col gap-8 shadow-[0px_1px_5px_rgba(0,0,0,0.2)] px-10 py-5 md:w-[80%] lg:w-[40%] 2xl:w-[40%] rounded-lg"
         onSubmit={handleSubmit}
       >
         <h1 className="text-3xl font-bold text-center">{formTitle}</h1>
-        {mode === MODE.REGISTER ? (
+
+        {mode === MODE.REGISTER && (
           <div className="flex flex-col gap-2">
             <label className="text-sm text-gray-700">Username</label>
             <input
@@ -149,8 +148,24 @@ const LoginPage = () => {
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-        ) : null}
-        {mode !== MODE.EMAIL_VERIFICATION ? (
+        )}
+
+        {mode === MODE.EMAIL_VERIFICATION ? (
+          <div className="flex flex-col gap-2">
+            <label className="text-sm text-gray-700">Verification Code</label>
+            <input
+              type="text"
+              name="emailCode"
+              placeholder="Code"
+              className="ring-2 ring-gray-500 rounded-md p-2"
+              onChange={(e) => setEmailCode(e.target.value)}
+            />
+          </div>
+        ) : mode === MODE.RESET_PASSWORD ? (
+          <h1 className="text-center text-lg font-semibold text-red-600">
+            Are you sure you want to reset password?
+          </h1>
+        ) : (
           <div className="flex flex-col gap-2">
             <label className="text-sm text-gray-700">E-mail</label>
             <input
@@ -161,19 +176,9 @@ const LoginPage = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-        ) : (
-          <div className="flex flex-col gap-2">
-            <label className="text-sm text-gray-700">Verification Code </label>
-            <input
-              type="text"
-              name="emailCode"
-              placeholder="Code"
-              className="ring-2 ring-gray-500 rounded-md p-2"
-              onChange={(e) => setEmailCode(e.target.value)}
-            />
-          </div>
         )}
-        {mode === MODE.LOGIN || mode === MODE.REGISTER ? (
+
+        {(mode === MODE.LOGIN || mode === MODE.REGISTER) && (
           <div className="flex flex-col gap-2">
             <label className="text-sm text-gray-700">Password</label>
             <input
@@ -184,7 +189,8 @@ const LoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-        ) : null}
+        )}
+
         {mode === MODE.LOGIN && (
           <div
             className="text-sm underline cursor-pointer text-found"
@@ -193,6 +199,7 @@ const LoginPage = () => {
             Forgot Password?
           </div>
         )}
+
         <button
           className="bg-found text-white p-2 rounded-md disabled:bg-red-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           disabled={isLoading}
@@ -224,9 +231,10 @@ const LoginPage = () => {
         </button>
 
         {error && <div className="text-red-600">{error}</div>}
+
         {mode === MODE.LOGIN && (
           <div
-            className="text-sm  cursor-pointer text-blue-700"
+            className="text-sm cursor-pointer text-blue-700"
             onClick={() => setMode(MODE.REGISTER)}
           >
             {"Don't"} have an account?
@@ -237,7 +245,7 @@ const LoginPage = () => {
             className="text-sm underline cursor-pointer text-blue-700"
             onClick={() => setMode(MODE.LOGIN)}
           >
-            Have and account?
+            Have an account?
           </div>
         )}
         {mode === MODE.RESET_PASSWORD && (
