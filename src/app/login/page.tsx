@@ -74,11 +74,12 @@ const LoginPage = () => {
           });
           break;
         case MODE.RESET_PASSWORD:
-          response = await wixClient.auth.sendPasswordResetEmail(
-            email,
-            window.location.href
-          );
-          setMessage("Password reset email sent. Please check your e-mail.");
+          // response = await wixClient.auth.sendPasswordResetEmail(
+          //   email,
+          //   window.location.href
+          // );
+          window.location.href = "/contact";
+          setMessage("send us a message to reset your password");
           break;
         case MODE.EMAIL_VERIFICATION:
           response = await wixClient.auth.processVerification({
@@ -107,7 +108,7 @@ const LoginPage = () => {
             response.errorCode === "invalidEmail" ||
             response.errorCode === "invalidPassword"
           ) {
-            setError("Invalid email or password!");
+            setError("Wrong email or password!");
           } else if (response.errorCode === "emailAlreadyExists") {
             setError("Email already exists!");
           } else if (response.errorCode === "resetPassword") {
@@ -116,9 +117,9 @@ const LoginPage = () => {
             setError("Something went wrong! Refresh the page and try again.");
           }
         case LoginState.EMAIL_VERIFICATION_REQUIRED:
-          setMode(MODE.EMAIL_VERIFICATION);
-        case LoginState.OWNER_APPROVAL_REQUIRED:
-          setMessage("Your account is pending approval");
+          setMode(MODE.LOGIN);
+        // case LoginState.OWNER_APPROVAL_REQUIRED:
+        //   setMessage("Your account is pending approval");
         default:
           break;
       }
@@ -162,7 +163,7 @@ const LoginPage = () => {
           </div>
         ) : (
           <div className="flex flex-col gap-2">
-            <label className="text-sm text-gray-700">Verification Code</label>
+            <label className="text-sm text-gray-700">Verification Code </label>
             <input
               type="text"
               name="emailCode"

@@ -43,7 +43,7 @@ const CheckoutPage = () => {
         }
       );
     } catch (err) {
-      console.error("Failed to send to Google Sheet:", err);
+      console.error("Failed to Send Order:", err);
     }
 
     localStorage.setItem("latestOrder", JSON.stringify(orderData));
