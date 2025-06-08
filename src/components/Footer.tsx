@@ -2,13 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Footer = () => {
+
+  const handleAdmin = () => {
+    window.location.href = "/admin";
+  };
   return (
     <div className="py-20 px-4 md:px-8 lg:px-16 xl:32 2xl:64 bg-gray-100 text-sm mt-20">
       {/*  TOP */}
       <div className="flex flex-col md:flex-row justify-center gap-24 ">
         {/* LEFT */}
         <div className="w-full md:w-1/2 lg:w-1/4 flex flex-col gap-8">
-          <Link href="/admin">
+          <Link href="/">
             <div className="text-2xl tracking-wide font-bold">Foundich</div>
           </Link>{" "}
           <p>
@@ -182,7 +186,8 @@ const Footer = () => {
       </div>
       {/*  BOTTOM */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-8 mt-16">
-        <div className="font-semibold">&copy; 2025 Foundich</div>
+        <div className="font-semibold"
+        onClick={handleAdmin} >&copy; 2025 Foundich</div>
         <div className="">
           <div className="">
             <span className="text-gray-500 mr-4 ">Language</span>
