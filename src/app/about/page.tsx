@@ -188,9 +188,9 @@ const AboutPage: React.FC = () => {
         </h2>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 team">
           {[
-            { name: "Ucheben", role: "Operations", img: "/ucheben.jpg" },
+            { name: "Ucheben", role: "Founder", img: "/ucheben.jpg" },
             { name: "Emeka", role: "Designer", img: "/emeka.jpg" },
-            { name: "Divine", role: "Developer", img: "/divine.jpeg" },
+            { name: "Divine", role: "Web Developer", img: "/divine.jpeg" },
             { name: "Precious", role: "Marketing Lead", img: "/pressy.jpg" },
           ].map((m, i) => (
             <div key={i} className="text-center">
