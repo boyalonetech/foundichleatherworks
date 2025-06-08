@@ -201,6 +201,7 @@ const NavIcons = () => {
               {member?.profile?.nickname || "User"}
             </div>
           </div>
+          <hr />
 
           <div
             className="text-red-600 cursor-pointer text-center"
