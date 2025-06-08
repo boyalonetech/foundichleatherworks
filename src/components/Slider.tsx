@@ -20,7 +20,7 @@ const slides = [
     description: "Sale up to 50% off",
     img: "/07c7781c4b6b5e7abab6663b2a893405.jpg",
     url: "/",
-    bg: "bg-gradient-to-r from-white to-green-500",
+    bg: "bg-gradient-to-r from-white to-green-50",
   },
   {
     id: 3,

@@ -69,8 +69,8 @@ const Menu = () => {
   }, [isLoggedIn, wixClient]);
 
   const cartPage = () => {
-    window.location.href="/cart";
-  }
+    window.location.href = "/cart";
+  };
 
   return (
     <div>
@@ -87,7 +87,7 @@ const Menu = () => {
       {/* Menu wrapper always rendered for animation */}
       <div
         ref={menuRef}
-        className={`fixed top-20 right-0 w-[100%] max-w-[100%] h-[calc(62vh-80px)] bg-white text-black
+        className={`fixed top-20 right-0 w-[100%] max-w-[100%] h-[calc(70vh-80px)] bg-white text-black
           flex flex-col pl-7 justify-center gap-8 text-xl shadow-xl z-10
           transform transition-transform duration-300 ease-in-out
           ${open ? "translate-x-0" : "translate-x-full"}
@@ -197,10 +197,7 @@ const Menu = () => {
           </span>
         </Link>
 
-        <div
-          className="relative cursor-pointer flex gap-4"
-          onClick={cartPage}
-        >
+        <div className="relative cursor-pointer flex gap-4" onClick={cartPage}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="30px"
@@ -217,7 +214,6 @@ const Menu = () => {
             {counter}
           </div>
         </div>
-
 
         <Link href="/profile">
           <span

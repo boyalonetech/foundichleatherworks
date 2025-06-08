@@ -14,7 +14,7 @@ const CartPage = () => {
   };
 
   return (
-    <div className="min-h-screen px-4 py-8 md:px-12 lg:px-24 bg-white mt-[15%] md:mt-0">
+    <div className="min-h-screen px-4 py-8 md:px-12 lg:px-24 bg-white mt-[17%] md:mt-0">
       <h1 className="sm:text-3xl text-2xl  font-bold mb-8 flex gap-2 items-center">
         <Image src="/logo1.png" alt="logo" width={35} height={35} />
         Shopping Cart</h1>
@@ -36,7 +36,7 @@ const CartPage = () => {
                     alt={item.productName?.original || "Product Image"}
                     width={500}
                     height={500}
-                    className="object-cover rounded-md sm:w-[30%]"
+                    className="object-cover rounded-md sm:w-[25%] w-[35%]"
                   />
                 )}
                 <div className="flex flex-col justify-between w-full">
