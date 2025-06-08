@@ -4,7 +4,7 @@ Welcome to **Foundich Leather Works** – a premium e-commerce platform for styl
 
 ## 🔗 Live Demo
 
-[Visit Foundich Website](https://foundich.vercel.app)
+[Visit Foundich Website](https://foundichleatherworks.vercel.app)
 
 ## 🖼 Project Preview
 
