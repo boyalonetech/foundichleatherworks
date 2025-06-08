@@ -129,7 +129,7 @@ const notifications: Notification[] = [
     id: 20,
     message: "New colorway just dropped: Desert Sun by Foundich. Limited stock!",
     time: "1d ago",
-    productImage: "/06b4520222b6824466bac6bebd1fcd44.jpg",
+    productImage: "/8f8e77f9c66a661f9ddd0446706abeff.jpg",
   },
 ];
 
