@@ -204,7 +204,7 @@ const NavIcons = () => {
           <hr />
 
           <div
-            className="text-red-600 cursor-pointer text-center"
+            className="text-red-600 cursor-pointer text-center pt-3"
             onClick={handleLogout}
           >
             {isLoading ? "Logging out..." : "Logout"}

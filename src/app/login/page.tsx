@@ -35,9 +35,9 @@ const LoginPage = () => {
 
   const formTitle =
     mode === MODE.LOGIN
-      ? "Log in"
+      ? "Welcome Back!"
       : mode === MODE.REGISTER
-      ? "Register"
+      ? "Create an Account"
       : mode === MODE.RESET_PASSWORD
       ? "Reset Your Password"
       : "Verify Your Email";
@@ -118,6 +118,8 @@ const LoginPage = () => {
           }
         case LoginState.EMAIL_VERIFICATION_REQUIRED:
           setMode(MODE.LOGIN);
+        // case LoginState.OWNER_APPROVAL_REQUIRED:
+        //   setMessage("Your account is pending approval");
         default:
           break;
       }
@@ -129,137 +131,141 @@ const LoginPage = () => {
     }
   };
 
-  return (
-    <div className="mt-10 h-[calc(100vh-80px)] px-4 md:px-8 flex items-center justify-center md:mt-5 lg:mt-5">
-      <form
-        className="flex flex-col gap-8 shadow-[0px_1px_5px_rgba(0,0,0,0.2)] px-10 py-5 md:w-[80%] lg:w-[40%] 2xl:w-[40%] rounded-lg"
-        onSubmit={handleSubmit}
-      >
-        <h1 className="text-3xl font-bold text-center">{formTitle}</h1>
+return (
+  <div className="min-h-screen flex items-center justify-center bg-white px-4 animate-fadeIn">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white border border-black/30 rounded-2xl p-8 md:w-[500px] w-full space-y-6 text-black shadow-xl"
+    >
+      <h1 className="text-4xl font-extrabold text-center tracking-tight">
+        {formTitle}
+      </h1>
 
-        {mode === MODE.REGISTER && (
-          <div className="flex flex-col gap-2">
-            <label className="text-sm text-gray-700">Username</label>
-            <input
-              type="text"
-              name="username"
-              placeholder="john"
-              className="ring-2 ring-gray-500 rounded-md p-2"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-        )}
+      {mode === MODE.REGISTER && (
+        <div className="space-y-1">
+          <label className="text-sm font-medium">Username</label>
+          <input
+            type="text"
+            name="username"
+            placeholder="john"
+            className="w-full px-4 py-2 rounded-lg bg-black/5 focus:ring-2 ring-found text-black placeholder-black/50"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+      )}
 
-        {mode === MODE.EMAIL_VERIFICATION ? (
-          <div className="flex flex-col gap-2">
-            <label className="text-sm text-gray-700">Verification Code</label>
-            <input
-              type="text"
-              name="emailCode"
-              placeholder="Code"
-              className="ring-2 ring-gray-500 rounded-md p-2"
-              onChange={(e) => setEmailCode(e.target.value)}
-            />
-          </div>
-        ) : mode === MODE.RESET_PASSWORD ? (
-          <h1 className="text-center text-lg font-semibold text-red-600">
-            Are you sure you want to reset password?
-          </h1>
-        ) : (
-          <div className="flex flex-col gap-2">
-            <label className="text-sm text-gray-700">E-mail</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="john@gmail.com"
-              className="ring-2 ring-gray-500 rounded-md p-2"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-        )}
+      {mode === MODE.EMAIL_VERIFICATION ? (
+        <div className="space-y-1">
+          <label className="text-sm font-medium">Verification Code</label>
+          <input
+            type="text"
+            name="emailCode"
+            placeholder="Enter code"
+            className="w-full px-4 py-2 rounded-lg bg-black/5 focus:ring-2 ring-found text-black placeholder-black/50"
+            onChange={(e) => setEmailCode(e.target.value)}
+          />
+        </div>
+      ) : mode === MODE.RESET_PASSWORD ? (
+        <p className="text-center text-lg text-red-600 font-semibold">
+          Are you sure you want to reset your password?
+        </p>
+      ) : (
+        <div className="space-y-1">
+          <label className="text-sm font-medium">Email</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="john@gmail.com"
+            className="w-full px-4 py-2 rounded-lg bg-black/5 focus:ring-2 ring-found text-black placeholder-black/50"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+      )}
 
-        {(mode === MODE.LOGIN || mode === MODE.REGISTER) && (
-          <div className="flex flex-col gap-2">
-            <label className="text-sm text-gray-700">Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter your password"
-              className="ring-2 ring-gray-500 rounded-md p-2"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-        )}
+      {(mode === MODE.LOGIN || mode === MODE.REGISTER) && (
+        <div className="space-y-1">
+          <label className="text-sm font-medium">Password</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            className="w-full px-4 py-2 rounded-lg bg-black/5 focus:ring-2 ring-found text-black placeholder-black/50"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+      )}
 
-        {mode === MODE.LOGIN && (
-          <div
-            className="text-sm underline cursor-pointer text-found"
-            onClick={() => setMode(MODE.RESET_PASSWORD)}
-          >
-            Forgot Password?
-          </div>
-        )}
-
-        <button
-          className="bg-found text-white p-2 rounded-md disabled:bg-red-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-          disabled={isLoading}
+      {mode === MODE.LOGIN && (
+        <p
+          className="text-sm text-blue-700 hover:underline cursor-pointer"
+          onClick={() => setMode(MODE.RESET_PASSWORD)}
         >
-          {isLoading ? (
-            <svg
-              className="w-5 h-5 animate-spin text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-              ></path>
-            </svg>
-          ) : (
-            buttonTitle
-          )}
-        </button>
+          Forgot password?
+        </p>
+      )}
 
-        {error && <div className="text-red-600">{error}</div>}
+      <button
+        disabled={isLoading}
+        className="w-full py-3 rounded-lg font-semibold bg-found text-white hover:bg-found/80 transition-all duration-200 flex justify-center items-center gap-2 disabled:bg-gray-500"
+      >
+        {isLoading ? (
+          <svg
+            className="w-5 h-5 animate-spin text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+            ></path>
+          </svg>
+        ) : (
+          buttonTitle
+        )}
+      </button>
 
-        {mode === MODE.LOGIN && (
-          <div
-            className="text-sm cursor-pointer text-blue-700"
-            onClick={() => setMode(MODE.REGISTER)}
-          >
-            {"Don't"} have an account?
-          </div>
-        )}
-        {mode === MODE.REGISTER && (
-          <div
-            className="text-sm underline cursor-pointer text-blue-700"
-            onClick={() => setMode(MODE.LOGIN)}
-          >
-            Have an account?
-          </div>
-        )}
-        {mode === MODE.RESET_PASSWORD && (
-          <div
-            className="text-sm underline cursor-pointer"
-            onClick={() => setMode(MODE.LOGIN)}
-          >
-            Go back to Login
-          </div>
-        )}
-        {message && <div className="text-green-600 text-sm">{message}</div>}
-      </form>
-    </div>
-  );
+      {error && <p className="text-red-600 text-sm text-center">{error}</p>}
+
+      {mode === MODE.LOGIN && (
+        <p
+          className="text-sm text-center text-blue-700 cursor-pointer hover:underline"
+          onClick={() => setMode(MODE.REGISTER)}
+        >
+          Don’t have an account? Register
+        </p>
+      )}
+      {mode === MODE.REGISTER && (
+        <p
+          className="text-sm text-center text-blue-700 cursor-pointer hover:underline"
+          onClick={() => setMode(MODE.LOGIN)}
+        >
+          Already have an account? Log in
+        </p>
+      )}
+      {mode === MODE.RESET_PASSWORD && (
+        <p
+          className="text-sm text-center text-blue-700 cursor-pointer hover:underline"
+          onClick={() => setMode(MODE.LOGIN)}
+        >
+          Go back to Login
+        </p>
+      )}
+
+      {message && <p className="text-green-600 text-sm text-center">{message}</p>}
+    </form>
+  </div>
+);
+
 };
 
 export default LoginPage;
