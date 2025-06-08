@@ -8,7 +8,7 @@ import { use, useEffect, useState } from "react";
 const slides = [
   {
     id: 1,
-    title: "summer sale collection",
+    title: "Summer sale collection",
     description: "Sale up to 50% off",
     img: "/7f4bf4ff36ccc4b7424e6d5b24bf59c4.jpg",
     url: "/",
@@ -20,11 +20,11 @@ const slides = [
     description: "Sale up to 50% off",
     img: "/07c7781c4b6b5e7abab6663b2a893405.jpg",
     url: "/",
-    bg: "bg-gradient-to-r from-white to-green-50",
+    bg: "bg-gradient-to-r from-white to-green-500",
   },
   {
     id: 3,
-    title: "frost sale collection",
+    title: "Frost sale collection",
     description: "Sale up to 50% off",
     img: "/e8589163c4e02be787f946269bec8911.jpg",
     url: "/",

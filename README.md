@@ -15,11 +15,11 @@ Welcome to **Foundich Leather Works** – a premium e-commerce platform for styl
 
 * **Frontend**: Next.js, TypeScript, Tailwind CSS
 * **Backend**: Node.js, Express (Optional for API routes if not using Firebase Functions)
-* **Authentication & Database**: Firebase Authentication, Firestore
+* **Authentication & Database**: Wix.com , 
 * **Payments**: Paystack Integration
-* **Storage**: Firebase Storage (for product images)
-* **Email Notifications**: EmailJS / Firebase Functions
-* **Order Management**: Google Sheets API / Firestore
+* **Storage**: Wix store (for product images)
+* **Email Notifications**: Nodemailer / wix Functions
+* **Order Management**: Google Sheets API / Wix store
 
 ## 🚀 Features
 

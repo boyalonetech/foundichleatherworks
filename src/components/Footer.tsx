@@ -3,9 +3,9 @@ import Link from "next/link";
 
 const Footer = () => {
 
-  const handleAdmin = () => {
-    window.location.href = "/admin";
-  };
+  // const handleAdmin = () => {
+  //   window.location.href = "/admin";
+  // };
   return (
     <div className="py-20 px-4 md:px-8 lg:px-16 xl:32 2xl:64 bg-gray-100 text-sm mt-20">
       {/*  TOP */}
@@ -187,7 +187,7 @@ const Footer = () => {
       {/*  BOTTOM */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-8 mt-16">
         <div className="font-semibold"
-        onClick={handleAdmin} >&copy; 2025 Foundich</div>
+        >&copy; 2025 Foundich</div>
         <div className="">
           <div className="">
             <span className="text-gray-500 mr-4 ">Language</span>
