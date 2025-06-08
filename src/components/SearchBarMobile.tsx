@@ -18,14 +18,14 @@ const SearchBar = () => {
 
   return (
 <form
-  className="flex items-center gap-4 w-screen px-5 py-[6px] bg-gray-200 rounded-2xl"
+  className="flex items-center gap-4 w-full px-5 py-[6px] bg-gray-200 rounded-2xl"
   onSubmit={handleSearch}
 >
   <input
     type="text"
     name="name"
     placeholder="Search"
-    className="flex-1 py-[2%] bg-transparent outline-none text-base"
+    className="flex-1 py-1 bg-transparent outline-none text-base"
   />
   <button type="submit" className="cursor-pointer">
     <svg

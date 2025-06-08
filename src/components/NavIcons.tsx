@@ -8,6 +8,7 @@ import CartModal from "./CartModal";
 import { useWixClient } from "@/hooks/useWixClient";
 import Cookies from "js-cookie";
 import { useCartStore } from "@/hooks/useCartStore";
+import Link from "next/link";
 
 const NavIcons = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -127,13 +128,18 @@ const NavIcons = () => {
 
   return (
     <div className="flex items-center gap-4 xl:gap-6 relative">
-      <Image
-        src="/notification.png"
-        alt="Notifications"
-        width={22}
-        height={22}
-        className="cursor-pointer"
-      />
+      <Link href="/notification" className="relative cursor-pointer md:hidden lg:block">
+        <Image
+          src="/notification.png"
+          alt="Notifications"
+          width={22}
+          height={22}
+          className="cursor-pointer"
+        />
+        <div className="absolute -top-1 -right-1 w-3 h-3 bg-found rounded-full text-white text-sm flex items-center justify-center scale-[0.7]">
+          
+        </div>
+      </Link>
 
       <div
         className="relative cursor-pointer md:hidden lg:block"

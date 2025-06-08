@@ -50,11 +50,11 @@ const Navbar = () => {
 
         {/* Search Input Mobile */}
         {isSearch && (
-          <div className="flex gap-1">
+          <div className="flex gap-1 items-center">
             <button
               type="button"
               onClick={() => setIsSearch(false)}
-              className="ml-2 p-2 rounded-full hover:bg-gray-300 text-gray-600"
+              className="ml-2 p-1 rounded-full hover:bg-gray-300 h-10  text-gray-600"
               title="Cancel"
             >
               {/* Cancel Icon */}

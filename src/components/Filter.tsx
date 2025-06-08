@@ -2,15 +2,10 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-
-
-
-
 const Filter = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
-
 
   const handleFilterChange = (
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
@@ -35,42 +30,29 @@ const Filter = () => {
           <option value="digital">Digital</option>
         </select>
         <div className="flex justify-between gap-[8rem] sm:gap-4">
-        <input
-          type="text"
-          name="min"
-          placeholder="min price"
-          className="text-xs rounded-2xl pl-2 py-2 w-24 ring-1 ring-gray-400"
-          onChange={handleFilterChange}
-        />
-        <input
-          type="text"
-          name="max"
-          placeholder="max price"
-          className="text-xs rounded-2xl pl-2 py-2 w-24 ring-1 ring-gray-400"
-          onChange={handleFilterChange}
-        />
+          <input
+            type="text"
+            name="min"
+            placeholder="min price"
+            className="text-xs rounded-2xl pl-2 py-2 w-24 ring-1 ring-gray-400"
+            onChange={handleFilterChange}
+          />
+          <input
+            type="text"
+            name="max"
+            placeholder="max price"
+            className="text-xs rounded-2xl pl-2 py-2 w-24 ring-1 ring-gray-400"
+            onChange={handleFilterChange}
+          />
         </div>
-       
+      </div>
+      <div className="">
         <select
           name=""
           id=""
           className="py-2 px-4 rounded-2xl text-xs font-medium bg-[#EBEDED] hidden sm:block"
         >
           <option>All Filters</option>
-        </select>
-      </div>
-      <div className="">
-        <select
-          name="sort"
-          id=""
-          className="py-2 px-4 rounded-2xl text-xs font-medium bg-white ring-1 ring-gray-400 hidden sm:block"
-          onChange={handleFilterChange}
-        >
-          <option>Sort By</option>
-          <option value="asc price">Price (low to high)</option>
-          <option value="desc price">Price (high to low)</option>
-          <option value="asc lastUpdated">Newest</option>
-          <option value="desc lastUpdated">Oldest</option>
         </select>
       </div>
     </div>

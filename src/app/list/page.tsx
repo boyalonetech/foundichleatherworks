@@ -37,7 +37,7 @@ const ListPage = async ({ searchParams }: { searchParams: any }) => {
           />
         </div>
       </div>
-      <div className="mt-[42%] block md:hidden overflow-hidden scale-[1.5] lg:hidden 2xl:hidden xl:hidden sm:hidden relative">
+      <div className="mt-[24%] block md:hidden overflow-hidden scale-[1.3] lg:hidden 2xl:hidden xl:hidden sm:hidden relative">
         <Image
           src="/photo-1653868250450-b83e6263d427.avif"
           width={500}
