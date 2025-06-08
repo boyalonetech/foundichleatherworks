@@ -16,7 +16,7 @@ const Navbar = () => {
   return (
     <div className="h-[10vh] md:h-24 lg:h-[10vh] px-4 md:px-8 shadow-[0_2px_3px_rgba(0,0,0,0.4)] fixed md:static top-0 left-0 w-full z-50 bg-white md:relative">
       {/* MOBILE */}
-      <div className="flex flex-col mt-6">
+      <div className="flex flex-col mt-6 sm:mt-0">
         {/* Only show when search is not active */}
         {!isSearch && (
           <div className="h-full flex items-center justify-between md:hidden nav">
