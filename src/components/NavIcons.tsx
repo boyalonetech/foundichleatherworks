@@ -9,6 +9,7 @@ import { useWixClient } from "@/hooks/useWixClient";
 import Cookies from "js-cookie";
 import { useCartStore } from "@/hooks/useCartStore";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 const NavIcons = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -61,7 +62,6 @@ const NavIcons = () => {
     }
   }, [wixClient, isLoggedIn]);
 
-  // Close profile dropdown on outside click or scroll
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -116,10 +116,17 @@ const NavIcons = () => {
     setIsLoading(true);
     setCustomImage(null);
     Cookies.remove("refreshToken");
-    const { logoutUrl } = await wixClient.auth.logout(window.location.href);
-    setIsLoading(false);
-    setIsProfileOpen(false);
-    router.push(logoutUrl);
+
+    try {
+      const { logoutUrl } = await wixClient.auth.logout(window.location.href);
+      toast.success("You have been logged out!");
+      setIsLoading(false);
+      setIsProfileOpen(false);
+      router.push(logoutUrl);
+    } catch (error) {
+      toast.error("Logout failed. Please try again.");
+      setIsLoading(false);
+    }
   };
 
   const cartPage = () => {
@@ -137,7 +144,6 @@ const NavIcons = () => {
           className="cursor-pointer"
         />
         <div className="absolute -top-1 -right-1 w-3 h-3 bg-found rounded-full text-white text-sm flex items-center justify-center scale-[0.7]">
-          
         </div>
       </Link>
 
