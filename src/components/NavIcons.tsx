@@ -9,7 +9,6 @@ import { useWixClient } from "@/hooks/useWixClient";
 import Cookies from "js-cookie";
 import { useCartStore } from "@/hooks/useCartStore";
 import Link from "next/link";
-import toast from "react-hot-toast";
 
 const NavIcons = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -17,6 +16,7 @@ const NavIcons = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [member, setMember] = useState<any>(null);
   const [customImage, setCustomImage] = useState<string | null>(null);
+  const [showLogoutPopup, setShowLogoutPopup] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -35,11 +35,7 @@ const NavIcons = () => {
   useEffect(() => {
     if (isLoggedIn) {
       const storedImage = localStorage.getItem("customProfileImage");
-      if (storedImage) {
-        setCustomImage(storedImage);
-      } else {
-        setCustomImage(null);
-      }
+      setCustomImage(storedImage || null);
     } else {
       setCustomImage(null);
     }
@@ -116,17 +112,14 @@ const NavIcons = () => {
     setIsLoading(true);
     setCustomImage(null);
     Cookies.remove("refreshToken");
+    setShowLogoutPopup(true);
 
-    try {
+    setTimeout(async () => {
       const { logoutUrl } = await wixClient.auth.logout(window.location.href);
-      toast.success("You have been logged out!");
       setIsLoading(false);
       setIsProfileOpen(false);
       router.push(logoutUrl);
-    } catch (error) {
-      toast.error("Logout failed. Please try again.");
-      setIsLoading(false);
-    }
+    }, 2000);
   };
 
   const cartPage = () => {
@@ -135,6 +128,12 @@ const NavIcons = () => {
 
   return (
     <div className="flex items-center gap-4 xl:gap-6 relative">
+      {showLogoutPopup && (
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-2 rounded-lg shadow-lg z-50 transition-opacity duration-300">
+          You have been logged out.
+        </div>
+      )}
+
       <Link href="/notification" className="relative cursor-pointer md:hidden lg:block">
         <Image
           src="/notification.png"
@@ -143,8 +142,7 @@ const NavIcons = () => {
           height={22}
           className="cursor-pointer"
         />
-        <div className="absolute -top-1 -right-1 w-3 h-3 bg-found rounded-full text-white text-sm flex items-center justify-center scale-[0.7]">
-        </div>
+        <div className="absolute -top-1 -right-1 w-3 h-3 bg-found rounded-full text-white text-sm flex items-center justify-center scale-[0.7]"></div>
       </Link>
 
       <div
@@ -208,13 +206,10 @@ const NavIcons = () => {
             />
           </div>
 
-          <div>
-            <div className="text-center mb-2 font-bold text-2xl">
-              {member?.profile?.nickname || "User"}
-            </div>
+          <div className="text-center mb-2 font-bold text-2xl">
+            {member?.profile?.nickname || "User"}
           </div>
           <hr />
-
           <div
             className="text-red-600 cursor-pointer text-center pt-3"
             onClick={handleLogout}
