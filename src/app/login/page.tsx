@@ -13,7 +13,13 @@ enum MODE {
   EMAIL_VERIFICATION = "EMAIL_VERIFICATION",
 }
 
-const NotificationBar = ({ text, type }: { text: string; type: "success" | "error" }) => {
+const NotificationBar = ({
+  text,
+  type,
+}: {
+  text: string;
+  type: "success" | "error";
+}) => {
   const emoji =
     text.includes("Successful")
       ? "✅"
@@ -25,11 +31,11 @@ const NotificationBar = ({ text, type }: { text: string; type: "success" | "erro
 
   return (
     <div
-      className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-xl text-white shadow-lg transition-all duration-300 ${
+      className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-[90%] max-w-sm sm:max-w-md px-4 py-3 rounded-xl text-white shadow-lg transition-all duration-300 text-center break-words ${
         type === "success" ? "bg-green-600" : "bg-red-600"
       }`}
     >
-      {emoji} {text}
+      <span className="text-sm sm:text-base font-medium">{emoji} {text}</span>
     </div>
   );
 };
