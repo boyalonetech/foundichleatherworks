@@ -6,8 +6,6 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useWixClient } from "@/hooks/useWixClient";
 import Cookies from "js-cookie";
-import { deleteDoc, doc, getDocs, collection, getFirestore } from "firebase/firestore";
-import { app } from "@/firebase"; // Make sure your Firebase app is initialized here
 
 const ProfilePage = () => {
   const [member, setMember] = useState<any>(null);
@@ -16,7 +14,6 @@ const ProfilePage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const wixClient = useWixClient();
-  const db = getFirestore(app);
 
   const isLoggedIn = !!member;
 
@@ -62,29 +59,10 @@ const ProfilePage = () => {
     }
   };
 
-  const deleteOrderFromSheet = async (email: string) => {
-    try {
-      const sheetRef = collection(db, "sheet");
-      const snapshot = await getDocs(sheetRef);
-      snapshot.forEach(async (docSnap) => {
-        const data = docSnap.data();
-        if (data.email === email) {
-          await deleteDoc(doc(sheetRef, docSnap.id));
-        }
-      });
-    } catch (error) {
-      console.error("Error deleting from sheet:", error);
-    }
-  };
-
   const handleLogout = async () => {
     try {
       setIsLoading(true);
       Cookies.remove("refreshToken");
-
-      if (member?.profile?.email) {
-        await deleteOrderFromSheet(member.profile.email);
-      }
 
       const { logoutUrl } = await wixClient.auth.logout(window.location.href);
       setIsLoading(false);
@@ -107,32 +85,37 @@ const ProfilePage = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4">
       <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-sm text-center">
-        <div className="relative w-24 h-24 mx-auto mb-4">
-          <div className="w-24 h-24 rounded-full overflow-hidden border mx-auto">
-            <Image
-              src={displayedImage}
-              alt="Profile"
-              fill
-              className="object-cover rounded-full"
-            />
-          </div>
-          {isLoggedIn && (
-            <button
-              onClick={handleEditClick}
-              className="absolute -bottom-0 -right-0 bg-blue-500 rounded-full p-[5px] shadow z-10"
-              title="Edit profile image"
-            >
-              <Pencil size={16} className=" text-white " />
-            </button>
-          )}
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="hidden"
-          />
-        </div>
+       <div className="relative w-24 h-24 mx-auto mb-4">
+  {/* Circular image with overflow-hidden */}
+  <div className="w-24 h-24 rounded-full overflow-hidden border mx-auto">
+    <Image
+      src={displayedImage}
+      alt="Profile"
+      fill
+      className="object-cover rounded-full"
+    />
+  </div>
+
+  {/* Pencil button outside the circular image */}
+  {isLoggedIn && (
+    <button
+      onClick={handleEditClick}
+      className="absolute -bottom-0 -right-0 bg-blue-500 rounded-full p-[5px] shadow z-10"
+      title="Edit profile image"
+    >
+      <Pencil size={16} className=" text-white " />
+    </button>
+  )}
+
+  <input
+    ref={fileInputRef}
+    type="file"
+    accept="image/*"
+    onChange={handleImageChange}
+    className="hidden"
+  />
+</div>
+
 
         <h2 className="font-bold mb-2 text-2xl">
           {member?.profile?.nickname || "User"}
