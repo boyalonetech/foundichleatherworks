@@ -9,10 +9,10 @@ import BottomNavTablet from "@/components/BottomNavTablet";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Foundich Leather Works",
+  title: "FOUNDICH Leather Works",
   description: "An E-commerce Website for home-made leather",
   icons: {
-    icon: "/logo.png", // Favicon path here
+    icon: "/favicon.ico", // Favicon path here
   },
 };
 

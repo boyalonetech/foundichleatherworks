@@ -92,7 +92,7 @@ const CheckoutPage = () => {
         setIsProcessing(false);
       },
       onclose: function () {
-        alert("Payment popup closed ❌.");
+        alert("Payment Closed ❌.");
         setIsProcessing(false);
       },
     });
