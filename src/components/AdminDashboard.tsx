@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Bar } from "react-chartjs-2";
+import BarChart from "./BarChart";
 
 type Props = {
   productsInStock: number;
@@ -153,14 +155,15 @@ const AdminDashboard = ({ productsInStock }: Props) => {
           )}
         </button>
         <div className="mb-[10%] overflow-hidden">
-          <Image
+          {/* <Image
             src="/ChatGPT Image Jun 6, 2025, 11_01_31 AM.png"
             width={10000}
             height={10000}
             quality={90}
             alt="analytics"
             className="w-[100%]"
-          />
+          /> */}
+          <BarChart />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Link href="/list">

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Script from "next/script";
-import { useCartStore } from "@/hooks/useCartStore"; // ✅ Assuming this is your cart store
+import { useCartStore } from "@/hooks/useCartStore";
 
 const PaymentForm = () => {
   const [scriptLoaded, setScriptLoaded] = useState(false);
@@ -31,36 +31,31 @@ const PaymentForm = () => {
   };
 
   const handlePay = () => {
-    const paystackKey = process.env.NEXT_PUBLIC_PAYSTACK_KEY;
-    if (!paystackKey) {
-      alert("Payment key not set.");
-      return;
-    }
-
     if (!form.name || !form.email || !form.phone) {
       alert("Please fill in all required fields.");
       return;
     }
 
-    if (!(window as any).PaystackPop) {
-      alert("Paystack script not loaded yet. Please try again.");
+    if (!(window as any).FlutterwaveCheckout) {
+      alert("Flutterwave script not loaded yet. Please try again.");
       return;
     }
 
     setIsProcessing(true);
 
-    const handler = (window as any).PaystackPop.setup({
-      key: paystackKey,
-      email: form.email,
-      amount: form.amount * 100,
+    (window as any).FlutterwaveCheckout({
+      public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_KEY,
+      tx_ref: `TXN_${Date.now()}`,
+      amount: form.amount,
       currency: "NGN",
-      ref: `TXN_${Date.now()}`,
-      metadata: {
-        custom_fields: [
-          { display_name: "Name", variable_name: "name", value: form.name },
-          { display_name: "Phone", variable_name: "phone", value: form.phone },
-          { display_name: "Notes", variable_name: "notes", value: form.notes },
-        ],
+      customer: {
+        email: form.email,
+        phonenumber: form.phone,
+        name: form.name,
+      },
+      customizations: {
+        title: "Foundich Payment",
+        description: "Order Payment",
       },
       callback: async (response: any) => {
         try {
@@ -70,7 +65,7 @@ const PaymentForm = () => {
             body: JSON.stringify({
               formData: form,
               cartData: cart,
-              reference: response.reference,
+              reference: response.transaction_id,
             }),
           });
 
@@ -86,20 +81,18 @@ const PaymentForm = () => {
           setIsProcessing(false);
         }
       },
-      onClose: function () {
+      onclose: () => {
         alert("Payment popup closed.");
         setIsProcessing(false);
       },
     });
-
-    handler.openIframe();
   };
 
   return (
     <div className="max-w-md mx-auto mt-10 space-y-4">
       <Script
-        src="https://js.paystack.co/v1/inline.js"
-        strategy="afterInteractive" // ✅ Fixed script strategy
+        src="https://checkout.flutterwave.com/v3.js"
+        strategy="afterInteractive"
         onLoad={() => setScriptLoaded(true)}
       />
       <input

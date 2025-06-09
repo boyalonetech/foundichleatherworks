@@ -45,7 +45,7 @@ export default async function SinglePage({ params }: PageProps) {
           <h2 className="font-medium text-2xl">₦{product.price?.price}</h2>
         ) : (
           <div className="flex items-center gap-4">
-            <h3 className="text-xl text-gray-500 line-through">
+            <h3 className="text-xl text-red-400 line-through">
               ₦{product.price?.price}
             </h3>
             <h2 className="font-medium text-2xl">

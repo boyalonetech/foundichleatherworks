@@ -14,9 +14,7 @@ const Add = ({
   stockNumber: number;
 }) => {
   const [quantity, setQuantity] = useState(1);
-
-  // // TEMPORARY
-  // const stock = 6;
+  const [showPopup, setShowPopup] = useState(false); // ✅ Popup state
 
   const handleQuantity = (type: "i" | "d") => {
     if (type === "d" && quantity > 1) {
@@ -29,52 +27,67 @@ const Add = ({
   };
 
   const wixClient = useWixClient();
-
   const { addItem, isLoading } = useCartStore();
 
-  return (
-    <div className="flex flex-col gap-5">
-      <h4 className="font-medium">Choose a Quantity</h4>
+  const handleAddToCart = async () => {
+    await addItem(wixClient, productId, variantId, quantity);
+    setShowPopup(true);
+    setTimeout(() => setShowPopup(false), 3000); // hide after 3 seconds
+  };
 
-      <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center ">
-        <div className="flex flex-row sm:flex-row sm:items-center gap-[5rem] md:gap-[10rem] lg:gap-[6rem] sm:gap-6 md:8 mb-4">
-          <div className="bg-gray-100 py-1 px-4 rounded-3xl flex items-center justify-between w-32">
-            <button
-              className="cursor-pointer text-xl"
-              onClick={() => handleQuantity("d")}
-            >
-              -
-            </button>
-            {quantity}
-            <button
-              className="cursor-pointer text-xl"
-              onClick={() => handleQuantity("i")}
-            >
-              +
-            </button>
+  return (
+    <>
+      {/* ✅ Fixed top notification */}
+      {showPopup && (
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white text-sm px-6 py-3 rounded-xl shadow-lg z-[1000]">
+          ✅ Item added to cart
+        </div>
+      )}
+
+      <div className="flex flex-col gap-5">
+        <h4 className="font-medium">Choose a Quantity</h4>
+
+        <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center ">
+          <div className="flex flex-row sm:flex-row sm:items-center gap-[5rem] md:gap-[8rem] lg:gap-[4rem] sm:gap-6 md:8 mb-4">
+            <div className="bg-gray-100 py-1 px-4 rounded-3xl flex items-center justify-between w-32">
+              <button
+                className="cursor-pointer text-xl"
+                onClick={() => handleQuantity("d")}
+              >
+                -
+              </button>
+              {quantity}
+              <button
+                className="cursor-pointer text-xl"
+                onClick={() => handleQuantity("i")}
+              >
+                +
+              </button>
+            </div>
+
+            {stockNumber < 1 ? (
+              <div className="text-xs text-red-500">Product is out of stock</div>
+            ) : (
+              <div className="text-xs text-gray-700 leading-snug">
+                Only{" "}
+                <span className="text-orange-500">{stockNumber} items</span>{" "}
+                left!
+                <br />
+                Don&apos;t miss it
+              </div>
+            )}
           </div>
 
-          {stockNumber < 1 ? (
-            <div className="text-xs text-red-500">Product is out of stock</div>
-          ) : (
-            <div className="text-xs text-gray-700 leading-snug">
-              Only <span className="text-orange-500">{stockNumber} items</span>{" "}
-              left!
-              <br />
-              Don&apos;t miss it
-            </div>
-          )}
+          <button
+            onClick={handleAddToCart}
+            disabled={isLoading || stockNumber < 1}
+            className="w-full sm:w-36 text-sm rounded-3xl ring-1 ring-found py-2 px-4 text-white bg-found hover:bg-red-700 hover:ring-0 hover:text-white disabled:cursor-not-allowed disabled:bg-red-400 disabled:ring-0 disabled:text-white"
+          >
+            Add To Cart
+          </button>
         </div>
-
-        <button
-          onClick={() => addItem(wixClient, productId, variantId, quantity)}
-          disabled={isLoading || stockNumber < 1}
-          className="w-full sm:w-36 text-sm rounded-3xl ring-1 ring-found py-2 px-4 text-white bg-found hover:bg-red-600 md:hover:bg-found md:hover:shadow-[0px_3px_10px_#f00] hover:text-white disabled:cursor-not-allowed disabled:bg-red-400 disabled:ring-0 disabled:text-white"
-        >
-          Add To Cart
-        </button>
       </div>
-    </div>
+    </>
   );
 };
 

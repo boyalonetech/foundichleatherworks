@@ -50,7 +50,7 @@ const Navbar = () => {
 
         {/* Search Input Mobile */}
         {isSearch && (
-          <div className="flex gap-1 items-center">
+          <div className="flex gap-1 items-center anime">
             <button
               type="button"
               onClick={() => setIsSearch(false)}

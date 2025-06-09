@@ -6,7 +6,7 @@ import DOMPurify from "isomorphic-dompurify";
 import { decode } from "html-entities";
 import Pagination from "./Pagination";
 
-const PRODUCT_PER_PAGE = 12;
+const PRODUCT_PER_PAGE = 16;
 
 const ProductList = async ({
   categoryId,
