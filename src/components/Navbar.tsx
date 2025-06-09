@@ -22,7 +22,7 @@ const Navbar = () => {
           <div className="h-full flex items-center justify-between md:hidden nav">
             <Link href="/">
               <div className="text-3xl tracking-wide font-bold text-found">
-                Foundich
+                FOUNDICH
               </div>
             </Link>
             <div className="flex gap-2 items-center">
@@ -90,7 +90,7 @@ const Navbar = () => {
               priority
             />
             <div className="text-3xl tracking-wide font-bold text-found">
-              Foundich
+              FOUNDICH
             </div>
           </Link>
           <nav className="hidden xl:flex gap-4">
