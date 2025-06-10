@@ -8,6 +8,15 @@ import Pagination from "./Pagination";
 
 const PRODUCT_PER_PAGE = 16;
 
+// Shuffle utility function
+const shuffleArray = (array: any[]) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
+
 const ProductList = async ({
   categoryId,
   limit,
@@ -42,10 +51,11 @@ const ProductList = async ({
   }
 
   const res = await productQuery.find();
+  const shuffledItems = shuffleArray(res.items);
 
   return (
     <div className="mt-12 mb-12 flex gap-x-8 gap-y-5 justify-between flex-wrap">
-      {res.items.map((product: products.Product) => (
+      {shuffledItems.map((product: products.Product) => (
         <Link
           href={`/${product.slug}`}
           key={product._id}
@@ -58,7 +68,7 @@ const ProductList = async ({
               alt={product.name || "Product image"}
               fill
               sizes="25vw"
-              quality={100} // Increased image quality
+              quality={100}
               className="absolute object-cover rounded-md z-10 hover:opacity-0 transition-opacity ease duration-500"
             />
             {product.media?.items?.[1]?.image?.url && (
@@ -67,7 +77,7 @@ const ProductList = async ({
                 alt={`${product.name} hover image`}
                 fill
                 sizes="25vw"
-                quality={100} // Increased image quality
+                quality={100}
                 className="absolute object-cover rounded-md"
               />
             )}
