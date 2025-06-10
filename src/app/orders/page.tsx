@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import html2pdf from "html2pdf.js";
+
 
 
 
@@ -13,19 +13,23 @@ const OrdersPage = () => {
     if (data) setOrder(JSON.parse(data));
   }, []);
 
-  const handleDownload = () => {
-    if (!receiptRef.current) return;
-    html2pdf()
-      .set({
-        margin: 0.5,
-        filename: "order-receipt.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-      })
-      .from(receiptRef.current)
-      .save();
-  };
+ const handleDownload = async () => {
+  if (!receiptRef.current) return;
+
+  const html2pdf = (await import("html2pdf.js") as any).default;
+
+  html2pdf()
+    .set({
+      margin: 0.5,
+      filename: "order-receipt.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    })
+    .from(receiptRef.current)
+    .save();
+};
+
 
   if (!order)
     return (
