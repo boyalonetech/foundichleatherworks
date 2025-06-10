@@ -105,22 +105,6 @@ const ProductList = async ({
           </div>
         </Link>
       ))}
-
-      <div className="mt-12 flex justify-between w-full">
-        <button className="rounded-md bg-found text-white p-2 text-sm w-24 cursor-pointer disabled:cursor-not-allowed disabled:bg-red-300 next">
-          Previous
-        </button>
-        <Link href="/list">
-          {" "}
-          <button className="rounded-md hover:bg-found text-found hover:text-white ring-1 ring-found p-2 text-sm w-24 cursor-pointer disabled:cursor-not-allowed disabled:bg-red-300">
-            Shop Now
-          </button>
-        </Link>
-
-        <button className="rounded-md bg-found text-white p-2 text-sm w-24 cursor-pointer disabled:cursor-not-allowed disabled:bg-red-300 previous">
-          Next
-        </button>
-      </div>
     </div>
   );
 };
