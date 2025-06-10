@@ -2,7 +2,7 @@
 
 import CategoryList from "@/components/CategoryList";
 import LoadingScreen from "@/components/LoadingScreen";
-import ProductList from "@/components/ProductList";
+import ProductListHome from "@/components/ProductListHome";
 import Slider from "@/components/Slider";
 import { Suspense } from "react";
 
@@ -13,7 +13,7 @@ const HomePage = async () => {
       <div className="mt-24 px-4 md:px-8 lg:16 xl:32 2xl:64">
         <div className="text-3xl font-bold text-center">Featured Products</div>
         <Suspense fallback={<LoadingScreen />}>
-          <ProductList
+          <ProductListHome
             categoryId={process.env.FEATURED_PRODUCTS_CATEGORY_ID!}
             limit={4}
           />
@@ -30,7 +30,7 @@ const HomePage = async () => {
       <div className="mt-24 px-4 md:px-8 lg:16 xl:32 2xl:64">
         <div className="text-3xl font-bold text-center">New Products</div>
         <Suspense fallback={<LoadingScreen />}>
-          <ProductList
+          <ProductListHome
             categoryId={process.env.FEATURED_PRODUCTS_CATEGORY_ID!}
             limit={4}
           />
