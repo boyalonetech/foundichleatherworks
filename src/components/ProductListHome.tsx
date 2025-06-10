@@ -110,9 +110,13 @@ const ProductList = async ({
         <button className="rounded-md bg-found text-white p-2 text-sm w-24 cursor-pointer disabled:cursor-not-allowed disabled:bg-red-300 next">
           Previous
         </button>
-        <button className="rounded-md hover:bg-found text-found hover:text-white ring-1 ring-found p-2 text-sm w-24 cursor-pointer disabled:cursor-not-allowed disabled:bg-red-300">
-          Shop Now
-        </button>
+        <Link href="/list">
+          {" "}
+          <button className="rounded-md hover:bg-found text-found hover:text-white ring-1 ring-found p-2 text-sm w-24 cursor-pointer disabled:cursor-not-allowed disabled:bg-red-300">
+            Shop Now
+          </button>
+        </Link>
+
         <button className="rounded-md bg-found text-white p-2 text-sm w-24 cursor-pointer disabled:cursor-not-allowed disabled:bg-red-300 previous">
           Next
         </button>
