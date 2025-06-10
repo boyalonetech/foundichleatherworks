@@ -52,7 +52,7 @@ function DealCard({ deal }: { deal: Deal }) {
   const [hours, minutes, seconds] = useCountdown(deal.endsAt);
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
+    <div className="bg-white  rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
       <div className="relative">
         <Image
           src={deal.image}
@@ -66,7 +66,7 @@ function DealCard({ deal }: { deal: Deal }) {
         </span>
       </div>
       <div className="p-4">
-        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-black">
           {deal.name}
         </h3>
         <div className="flex items-center space-x-2 mt-1">
