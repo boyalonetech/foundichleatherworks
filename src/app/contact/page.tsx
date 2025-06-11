@@ -1,123 +1,120 @@
-"use client";
+'use client'
 
-import React, { useState } from "react";
+import { Mail, Phone, MapPin, MessageCircle } from 'lucide-react'
+import { useState } from 'react'
 
-const ContactPage: React.FC = () => {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    message: "",
-  });
+export default function ContactPage() {
+  const [form, setForm] = useState({ name: '', email: '', message: '' })
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const { fullName, email, message } = formData;
-
-    // Format the message
-    const whatsappMessage = `Hello Foundich Leather Works! 👋\n\nFull Name: ${fullName}\nEmail: ${email}\nMessage: ${message}`;
-
-    // Replace with your WhatsApp number in international format (e.g. 2348161514098)
-    const phoneNumber = "2348161514098";
-
-    // Open WhatsApp link
-    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-      whatsappMessage
-    )}`;
-    window.open(whatsappURL, "_blank");
-  };
+    e.preventDefault()
+    alert('Message sent! (Integrate with email API or backend)')
+  }
 
   return (
-    <main className="min-h-screen bg-white text-black px-6 py-10 md:px-16 lg:px-32 mt-[30%] md:mt-2">
-      <section className="max-w-2xl mx-auto">
-        <h1 className="text-4xl font-bold mb-6 text-found">Contact Us</h1>
-        <p className="mb-8 text-lg">
-          Have a question , Password reset or custom order? Message us directly!
-        </p>
+    <div className="min-h-screen bg-white text-gray-900 px-4 md:px-20 py-12 mt-12 md:mt-0">
+      <h1 className="text-4xl font-bold mb-6 text-center text-found">Contact Foundich Leatherworks</h1>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label
-              htmlFor="fullName"
-              className="block font-medium text-sm mb-1"
-            >
-              Full Name
-            </label>
-            <input
-              type="text"
-              name="fullName"
-              id="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-found-500"
-            />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Contact Cards */}
+        <div className="space-y-6">
+          <div className="bg-gray-100 p-6 rounded-2xl shadow-md flex items-center space-x-4">
+            <Phone className="text-green-600" />
+            <div>
+              <h3 className="font-semibold">Phone</h3>
+              <p className="text-sm text-gray-600">+234 816 151 4098</p>
+            </div>
           </div>
 
-          <div>
-            <label htmlFor="email" className="block font-medium text-sm mb-1">
-              Email Address
-            </label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-found-500"
-            />
+          <div className="bg-gray-100 p-6 rounded-2xl shadow-md flex items-center space-x-4">
+            <Mail className="text-blue-600" />
+            <div>
+              <h3 className="font-semibold">Email</h3>
+              <p className="text-sm text-gray-600">foundichleatherworks@gmail.com</p>
+            </div>
           </div>
 
-          <div>
-            <label htmlFor="message" className="block font-medium text-sm mb-1">
-              Message
-            </label>
-            <textarea
-              name="message"
-              id="message"
-              rows={5}
-              value={formData.message}
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-found-500"
-            ></textarea>
+          <div className="bg-gray-100 p-6 rounded-2xl shadow-md flex items-center space-x-4">
+            <MessageCircle className="text-green-500" />
+            <div>
+              <h3 className="font-semibold">WhatsApp</h3>
+              <a
+                href="https://wa.me/2348161514098"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-green-700 underline"
+              >
+                Chat on WhatsApp
+              </a>
+            </div>
           </div>
+
+          <div className="bg-gray-100 p-6 rounded-2xl shadow-md flex items-center space-x-4">
+            <MapPin className="text-red-500" />
+            <div>
+              <h3 className="font-semibold">Location</h3>
+              <p className="text-sm text-gray-600">Aba, Abia State, Nigeria</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Contact Form */}
+        <form onSubmit={handleSubmit} className="bg-gray-50 p-8 rounded-2xl shadow-lg space-y-6">
+          <h2 className="text-2xl text-found font-semibold">Send Us a Message</h2>
+
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            value={form.name}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-black"
+            required
+          />
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            value={form.email}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-black"
+            required
+          />
+
+          <textarea
+            name="message"
+            placeholder="Your Message"
+            value={form.message}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded-md p-3 h-32 resize-none focus:outline-none focus:ring-2 focus:ring-black"
+            required
+          ></textarea>
 
           <button
             type="submit"
-            className="bg-found text-white px-6 py-2 rounded-lg hover:bg-found-800 transition flex gap-2"
+            className="bg-found text-white px-6 py-3 rounded-md hover:bg-red-700 transition"
           >
-            Send
-            <span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={20}
-                height={20}
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill="currentColor"
-                  d="m4 8.25l7.51 1l-7.5-3.22zm.01 9.72l7.5-3.22l-7.51 1z"
-                  opacity={0.3}
-                ></path>
-                <path
-                  fill="currentColor"
-                  d="M2.01 3L2 10l15 2l-15 2l.01 7L23 12zM4 8.25V6.03l7.51 3.22zm.01 9.72v-2.22l7.51-1z"
-                ></path>
-              </svg>
-            </span>{" "}
+            Send Message
           </button>
         </form>
-      </section>
-    </main>
-  );
-};
+      </div>
 
-export default ContactPage;
+      {/* Google Map */}
+      <div className="mt-16 rounded-2xl overflow-hidden shadow-lg">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.961099323012!2d7.372978314262404!3d5.118003196326037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1042c08913b9d799%3A0x4779c553b68a0c6d!2sAba%2C%20Nigeria!5e0!3m2!1sen!2sng!4v1686000000000"
+          width="100%"
+          height="350"
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </div>
+  )
+}
