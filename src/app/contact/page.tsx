@@ -20,10 +20,10 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-white text-gray-900 px-4 md:px-20 py-12 mt-12 md:mt-0">
       <h1 className="text-4xl font-bold mb-6 text-center text-found">
-        Contact Foundich Leatherworks
+        Foundich Leatherworks
       </h1>
 
-            {/* Google Map */}
+      {/* Google Map */}
       <div className="mb-16 rounded-2xl overflow-hidden shadow-lg h-[450px] w-full">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.9449622379043!2d7.339658173495515!3d5.112573537952514!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10429be538ad285d%3A0xf753ab6c4383d553!2s14%20Power%20Line%2C%20Ariaria%2C%20Aba%20450102%2C%20Abia!5e0!3m2!1sen!2sng!4v1749638930160!5m2!1sen!2sng"
@@ -38,15 +38,24 @@ export default function ContactPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Contact Cards */}
         <div className="space-y-6">
-          <div className="bg-gray-100 p-6 rounded-2xl shadow-md flex items-center space-x-4">
+          <a
+            href="tel:+2348161514098"
+            target="_blank"
+            className="bg-gray-100 p-6 rounded-2xl shadow-md flex items-center space-x-4"
+          >
             <Phone className="text-green-600" />
             <div>
               <h3 className="font-semibold">Phone</h3>
               <p className="text-sm text-gray-600">+234 816 151 4098</p>
             </div>
-          </div>
+          </a>
 
-          <div className="bg-gray-100 p-6 rounded-2xl shadow-md flex items-center space-x-4">
+          <a
+            href="mailto:boyalonetechs@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-gray-100 p-6 rounded-2xl shadow-md flex items-center space-x-4"
+          >
             <Mail className="text-blue-600" />
             <div>
               <h3 className="font-semibold">Email</h3>
@@ -54,9 +63,13 @@ export default function ContactPage() {
                 foundichleatherworks@gmail.com
               </p>
             </div>
-          </div>
+          </a>
 
-          <div className="bg-gray-100 p-6 rounded-2xl shadow-md flex items-center space-x-4">
+          <a
+            href="https://wa.me/2348161514098"
+            target="_blank"
+            className="bg-gray-100 p-6 rounded-2xl shadow-md flex items-center space-x-4"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="25"
@@ -70,16 +83,11 @@ export default function ContactPage() {
             </svg>
             <div>
               <h3 className="font-semibold">WhatsApp</h3>
-              <a
-                href="https://wa.me/2348161514098"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-green-700"
-              >
+              <p rel="noopener noreferrer" className="text-sm text-green-700">
                 Chat on WhatsApp
-              </a>
+              </p>
             </div>
-          </div>
+          </a>
 
           <div className="bg-gray-100 p-6 rounded-2xl shadow-md flex items-center space-x-4">
             <MapPin className="text-red-500" />
@@ -130,14 +138,23 @@ export default function ContactPage() {
 
           <button
             type="submit"
-            className="bg-found text-white px-6 py-3 rounded-xl hover:bg-red-700 transition"
+            className="bg-found text-white px-6 py-3 rounded-xl hover:bg-red-700 transition  flex gap-2"
           >
             Send Message
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M.292 1.665L24.002 12L.293 22.336L3.94 12zM5.708 13l-2 5.665L18.999 12L3.708 5.336l2 5.664H11v2z"
+              />
+            </svg>
           </button>
         </form>
       </div>
-
-
     </div>
   );
 }
