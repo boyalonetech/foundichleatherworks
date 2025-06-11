@@ -23,6 +23,18 @@ export default function ContactPage() {
         Contact Foundich Leatherworks
       </h1>
 
+            {/* Google Map */}
+      <div className="mb-16 rounded-2xl overflow-hidden shadow-lg h-[450px] w-full">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.9449622379043!2d7.339658173495515!3d5.112573537952514!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10429be538ad285d%3A0xf753ab6c4383d553!2s14%20Power%20Line%2C%20Ariaria%2C%20Aba%20450102%2C%20Abia!5e0!3m2!1sen!2sng!4v1749638930160!5m2!1sen!2sng"
+          className="w-full h-full"
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Contact Cards */}
         <div className="space-y-6">
@@ -125,17 +137,7 @@ export default function ContactPage() {
         </form>
       </div>
 
-      {/* Google Map */}
-      <div className="mt-16 rounded-2xl overflow-hidden shadow-lg h-[450px] w-full">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.9449622379043!2d7.339658173495515!3d5.112573537952514!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10429be538ad285d%3A0xf753ab6c4383d553!2s14%20Power%20Line%2C%20Ariaria%2C%20Aba%20450102%2C%20Abia!5e0!3m2!1sen!2sng!4v1749638930160!5m2!1sen!2sng"
-          className="w-full h-full"
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
-      </div>
+
     </div>
   );
 }
