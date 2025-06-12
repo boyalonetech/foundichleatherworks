@@ -33,6 +33,7 @@ export default function RootLayout({
           {children}
           <Footer />
           <BottomNavTablet />
+
         </WixClientContextProvider>
       </body>
     </html>

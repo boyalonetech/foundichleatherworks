@@ -44,6 +44,12 @@
 }
 
 
+.fou-nd {
+  transition: 0.3s ease-out;
+  z-index: 0;
+  animation: slide 1.5s linear 1;
+
+}
 
 @keyframes slide {
   from {
@@ -81,5 +87,3 @@
     scale: 1;
   }
 }
-
-

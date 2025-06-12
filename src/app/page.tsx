@@ -1,43 +1,40 @@
-// "use client";
+// components/LoadingScreen.tsx
 
-import CategoryList from "@/components/CategoryList";
-import LoadingScreen from "@/components/LoadingScreen";
-import ProductListHome from "@/components/ProductListHome";
-import Slider from "@/components/Slider";
-import { Suspense } from "react";
+"use client"
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
 
-const HomePage = async () => {
+const LoadingScreen: React.FC = () => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.location.href = "/home";
+    }, 3000);
+
+    return () => clearTimeout(timer); // Cleanup on unmount
+  }, []);
+
+
   return (
-    <div className="">
-      <Slider />
-      <div className="mt-24 px-4 md:px-8 lg:16 xl:32 2xl:64">
-        <div className="text-3xl font-bold text-center">Featured Products</div>
-        <Suspense fallback={<LoadingScreen />}>
-          <ProductListHome
-            categoryId={process.env.FEATURED_PRODUCTS_CATEGORY_ID!}
-            limit={4}
-          />
-        </Suspense>
-      </div>{" "}
-      <div className="mt-24">
-        <h1 className="px-4 md:px-8 lg:16 xl:32 2xl:64 text-center font-bold text-3xl mb-12">
-          Categories
-        </h1>
-        <Suspense fallback={<LoadingScreen />}>
-          <CategoryList />
-        </Suspense>
-      </div>{" "}
-      <div className="mt-24 px-4 md:px-8 lg:16 xl:32 2xl:64">
-        <div className="text-3xl font-bold text-center">New Products</div>
-        <Suspense fallback={<LoadingScreen />}>
-          <ProductListHome
-            categoryId={process.env.FEATURED_PRODUCTS_CATEGORY_ID!}
-            limit={4}
-          />
-        </Suspense>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white text-black overflow-hidden">
+      <div className="flex flex-col items-center justify-center h-screen bg-white ">
+        <div className="relative">
+          {/* Ground Shadow */}
+          <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-40 h-10 bg-black/50 rounded-[100%] blur-xl z-0 fou-nd2" />
+
+          {/* Image */}
+          <div className="relative z-10">
+            <Image
+              src="/found.png"
+              alt="Foundich Logo"
+              width={400}
+              height={400}
+              className="rounded-2xl shadow-[0px_2px_10px_rgba(0,0,0,0.2)] scale-[0.5] transition-transform py-20 px-10 fou-nd"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default HomePage;
+export default LoadingScreen;

@@ -4,10 +4,10 @@ const BottomNavTablet = () => {
   return (
     <nav
       className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-300 shadow-md
-                 hidden xl:hidden md:flex md:justify-around md:items-center md:h-16 z-50"
+                 hidden xl:hidden md:flex md:justify-around md:items-center md:h-16 z-40"
     >
       <Link
-        href="/"
+        href="/home"
         className="flex flex-col items-center text-red-600 text-sm"
       >
         <svg

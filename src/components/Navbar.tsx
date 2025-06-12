@@ -16,7 +16,7 @@ const Navbar = () => {
   const pathname = usePathname(); // ✅ get current route
 
   const navLinks = [
-    { href: "/", label: "Home" },
+    { href: "/home", label: "Home" },
     { href: "/list", label: "Shop" },
     { href: "/deals", label: "Deals" },
     { href: "/about", label: "About" },

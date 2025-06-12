@@ -94,7 +94,7 @@ const Menu = () => {
         `}
         style={{ pointerEvents: open ? "auto" : "none" }} // disable pointer events when hidden
       >
-        <Link href="/">
+        <Link href="/home">
           <span
             className="flex items-center gap-4"
             onClick={() => setOpen(false)}
