@@ -1,10 +1,13 @@
 "use client";
 
-import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
-import { useState } from "react";
+import { Mail, Phone, MapPin, X } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [loading, setLoading] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const popupRef = useRef<HTMLDivElement | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -12,21 +15,58 @@ export default function ContactPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Message sent! (Integrate with email API or backend)");
+    setLoading(true);
+
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
+    const data = await res.json();
+    setLoading(false);
+
+    if (data.success) {
+      setShowPopup(true);
+      setForm({ name: "", email: "", message: "" });
+    } else {
+      alert("Failed to send message. Please try again.");
+    }
   };
 
+  // Close popup when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(event.target as Node)
+      ) {
+        setShowPopup(false);
+      }
+    };
+
+    if (showPopup) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showPopup]);
+
   return (
-    <div className="min-h-screen bg-white text-gray-900 px-4 md:px-20 py-12 mt-12 md:mt-0">
+    <div className="relative min-h-screen bg-white text-gray-900 px-4 md:px-20 py-12 mt-12 md:mt-0">
       <h1 className="text-4xl font-bold mb-6 text-center text-found">
         Foundich Leatherworks
       </h1>
 
-      {/* Google Map */}
       <div className="mb-16 rounded-2xl overflow-hidden shadow-lg h-[450px] w-full">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.9449622379043!2d7.339658173495515!3d5.112573537952514!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10429be538ad285d%3A0xf753ab6c4383d553!2s14%20Power%20Line%2C%20Ariaria%2C%20Aba%20450102%2C%20Abia!5e0!3m2!1sen!2sng!4v1749638930160!5m2!1sen!2sng"
+          src="https://www.google.com/maps/embed?pb=..."
           className="w-full h-full"
           style={{ border: 0 }}
           allowFullScreen
@@ -36,11 +76,10 @@ export default function ContactPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* Contact Cards */}
+        {/* Contact Cards (same as before) */}
         <div className="space-y-6">
           <a
             href="tel:+2348161514098"
-            target="_blank"
             className="bg-gray-100 p-6 rounded-2xl shadow-md flex items-center space-x-4"
           >
             <Phone className="text-green-600" />
@@ -51,9 +90,7 @@ export default function ContactPage() {
           </a>
 
           <a
-            href="mailto:boyalonetechs@gmail.com"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="mailto:foundichleatherworks@gmail.com"
             className="bg-gray-100 p-6 rounded-2xl shadow-md flex items-center space-x-4"
           >
             <Mail className="text-blue-600" />
@@ -83,9 +120,7 @@ export default function ContactPage() {
             </svg>
             <div>
               <h3 className="font-semibold">WhatsApp</h3>
-              <p rel="noopener noreferrer" className="text-sm text-green-700">
-                Chat on WhatsApp
-              </p>
+              <p className="text-sm text-green-700">Chat on WhatsApp</p>
             </div>
           </a>
 
@@ -113,7 +148,7 @@ export default function ContactPage() {
             placeholder="Your Name"
             value={form.name}
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full border border-gray-300 rounded-md p-3"
             required
           />
 
@@ -123,7 +158,7 @@ export default function ContactPage() {
             placeholder="Your Email"
             value={form.email}
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full border border-gray-300 rounded-md p-3"
             required
           />
 
@@ -132,29 +167,40 @@ export default function ContactPage() {
             placeholder="Your Message"
             value={form.message}
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded-md p-3 h-32 resize-none focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full border border-gray-300 rounded-md p-3 h-32 resize-none"
             required
-          ></textarea>
+          />
 
           <button
             type="submit"
-            className="bg-found text-white px-6 py-3 rounded-xl hover:bg-red-700 transition  flex gap-2"
+            className="bg-found text-white px-6 py-3 rounded-xl hover:bg-red-700 transition flex gap-2"
+            disabled={loading}
           >
-            Send Message
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fill="currentColor"
-                d="M.292 1.665L24.002 12L.293 22.336L3.94 12zM5.708 13l-2 5.665L18.999 12L3.708 5.336l2 5.664H11v2z"
-              />
-            </svg>
+            {loading ? "Sending..." : "Send Message"}
           </button>
         </form>
       </div>
+
+      {/* ✅ Success Popup */}
+      {showPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div
+            ref={popupRef}
+            className="bg-white rounded-xl shadow-xl max-w-sm w-full p-6 relative text-center"
+          >
+            <button
+              onClick={() => setShowPopup(false)}
+              className="absolute top-2 right-2 text-gray-400 hover:text-black"
+            >
+              <X />
+            </button>
+            <h2 className="text-lg font-semibold mb-2">🎉 Message Sent</h2>
+            <p className="text-sm text-gray-600">
+              Thank you for reaching out. We'll get back to you soon!
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
