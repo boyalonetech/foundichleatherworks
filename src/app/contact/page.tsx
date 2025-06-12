@@ -59,7 +59,7 @@ export default function ContactPage() {
 
   return (
     <div className="relative min-h-screen bg-white text-gray-900 px-4 md:px-20 py-12 mt-12 md:mt-0">
-      <h1 className="text-4xl font-bold mb-6 text-center text-found">
+      <h1 className="text-4xl font-bold mb-6 text-center text-found hidden md:block">
         Foundich Leatherworks
       </h1>
 
