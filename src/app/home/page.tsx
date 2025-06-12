@@ -2,7 +2,6 @@
 
 import CategoryList from "@/components/CategoryList";
 import LoadingScreen from "@/components/LoadingScreen";
-import Open from "@/components/Open";
 import ProductListHome from "@/components/ProductListHome";
 import Slider from "@/components/Slider";
 import { Suspense } from "react";
