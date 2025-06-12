@@ -43,3 +43,43 @@
   visibility: hidden;
 }
 
+
+
+@keyframes slide {
+  from {
+    /* transform: ; */
+    scale: 0.1;
+    opacity: 0;
+    transform: translateY(-70%) skew(100deg, 100deg);
+
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+    scale: 1;
+    transform: skew(0deg, 0deg);
+
+  }
+}
+
+
+.fou-nd2 {
+  transition: 0.3s ease-out;
+  z-index: 0;
+  animation: slide2 1.5s linear 1;
+}
+
+@keyframes slide2 {
+  from {
+    transform: translateY(70%);
+    scale: 0.1;
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+
