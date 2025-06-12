@@ -36,7 +36,6 @@ export default function ContactPage() {
     }
   };
 
-  // Close popup when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -76,7 +75,7 @@ export default function ContactPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* Contact Cards (same as before) */}
+        {/* Contact Cards */}
         <div className="space-y-6">
           <a
             href="tel:+2348161514098"
@@ -181,7 +180,7 @@ export default function ContactPage() {
         </form>
       </div>
 
-      {/* ✅ Success Popup */}
+      {/* Success Popup */}
       {showPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
           <div
@@ -196,7 +195,7 @@ export default function ContactPage() {
             </button>
             <h2 className="text-lg font-semibold mb-2">🎉 Message Sent</h2>
             <p className="text-sm text-gray-600">
-              Thank you for reaching out. We'll get back to you soon!
+              {"Thank you for reaching out. We'll get back to you soon!"}
             </p>
           </div>
         </div>
