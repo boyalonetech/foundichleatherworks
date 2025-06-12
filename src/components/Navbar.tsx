@@ -24,7 +24,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="h-[10vh] md:h-24 lg:h-[10vh] px-4 md:px-8 shadow-[0_2px_3px_rgba(0,0,0,0.4)] fixed md:static top-0 left-0 w-full z-50 bg-white md:relative flex flex-col justify-center">
+    <div className="h-[10vh] md:h-24 lg:h-[10vh] px-4 md:px-8 fixed md:static top-0 left-0 w-full z-50 bg-white md:relative flex flex-col justify-center">
       {/* Mobile */}
       {!isSearch && (
         <div className="h-full flex items-center justify-between md:hidden nav">
@@ -83,9 +83,9 @@ const Navbar = () => {
               className="mt-2"
               priority
             />
-            <div className="text-3xl tracking-wide font-bold text-found">
+            {/* <div className="text-3xl tracking-wide font-bold text-found">
               FOUNDICH
-            </div>
+            </div> */}
           </Link>
           <nav className="hidden xl:flex gap-4">
             {navLinks.map((link) => (
