@@ -15,11 +15,11 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const BarChart = () => {
   const data = {
-    labels: ['January', 'February', 'March', 'April', 'May'],
+    labels: ['June', 'July', 'August', 'September', 'October'],
     datasets: [
       {
-        label: 'Users Gained',
-        data: [200, 300, 400, 500, 600],
+        label: 'Sales made',
+        data: [300, 50, 50, 50, 50],
         backgroundColor: 'rgba(50, 205, 50, 0.6)', // lime green
         borderRadius: 5,
       },
@@ -34,7 +34,7 @@ const BarChart = () => {
       },
       title: {
         display: true,
-        text: 'Monthly User Growth',
+        text: 'Monthly Sales Growth',
       },
     },
   };
