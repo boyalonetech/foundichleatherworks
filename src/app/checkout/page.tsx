@@ -88,6 +88,9 @@ const CheckoutPage = () => {
         alert(
           `Getting Your Order Details ✅ Transaction ID: ${response.transaction_id}`
         );
+        <div className="">
+          try
+        </div>
         sendOrderDetails(response.transaction_id);
         setIsProcessing(false);
       },
