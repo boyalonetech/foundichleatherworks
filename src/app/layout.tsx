@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "FOUNDICH Leather Works",
   description: "An E-commerce Website for home-made leather",
   icons: {
-    icon: "/favicon.ico", // Favicon path here
+    icon: "/favicon.ico", // Favicon path 
   },
 };
 
@@ -24,7 +24,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Optional: add fallback or more sizes */}
         <link rel="icon" href="/logo.png" type="image/png" />
       </head>
       <body className={inter.className}>
@@ -33,7 +32,6 @@ export default function RootLayout({
           {children}
           <Footer />
           <BottomNavTablet />
-
         </WixClientContextProvider>
       </body>
     </html>

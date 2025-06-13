@@ -86,7 +86,7 @@ const CheckoutPage = () => {
 
       callback: function (response: any) {
         alert(
-          `✅ Payment complete! Transaction ID: ${response.transaction_id}`
+          `Getting Your Order Details ✅ Transaction ID: ${response.transaction_id}`
         );
         sendOrderDetails(response.transaction_id);
         setIsProcessing(false);
