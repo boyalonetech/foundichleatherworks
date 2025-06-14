@@ -90,7 +90,9 @@ const ProductList = async ({
             {/* Name and Price */}
             <div className="flex justify-between text-sm font-medium">
               <span className="text-[14px] font-bold">{product.name}</span>
-              <span className="font-semibold text-found">₦{product.price?.price}</span>
+              <span className="font-semibold text-found">
+                ₦{product.price?.price}
+              </span>
             </div>
 
             {/* Short Description */}

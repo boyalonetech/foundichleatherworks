@@ -23,7 +23,7 @@ const SearchBar = () => {
       <input
         type="text"
         name="name"
-        placeholder="Search"
+        placeholder="Search Products"
         className="flex-1 bg-transparent outline-none"
       />
       <button className="cursor-pointer">
