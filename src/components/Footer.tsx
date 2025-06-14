@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Footer = () => {
-
   // const handleAdmin = () => {
   //   window.location.href = "/admin";
   // };
@@ -58,63 +57,68 @@ const Footer = () => {
             +2349074833734
           </span>
           <div className="flex gap-6">
-            <Image src="/facebook.png" alt="icon" width={16} height={16} />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width={16}
-              height={16}
-              viewBox="0 0 24 24"
-              className="scale-[1.3]"
-            >
-              <circle
-                cx={17}
-                cy={7}
-                r={1.5}
-                fill="currentColor"
-                fillOpacity={0}
+            <a href="https://www.facebook.com/profile.php?id=100086447977841">
+              <Image src="/facebook.png" alt="icon" width={16} height={16} />
+            </a>
+            <a href="https://www.instagram.com/foundichleatherworks/">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={16}
+                height={16}
+                viewBox="0 0 24 24"
+                className="scale-[1.3]"
               >
-                <animate
-                  fill="freeze"
-                  attributeName="fill-opacity"
-                  begin="1.3s"
-                  dur="0.15s"
-                  values="0;1"
-                ></animate>
-              </circle>
-              <g
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-              >
-                <path
-                  strokeDasharray={72}
-                  strokeDashoffset={72}
-                  d="M16 3c2.76 0 5 2.24 5 5v8c0 2.76 -2.24 5 -5 5h-8c-2.76 0 -5 -2.24 -5 -5v-8c0 -2.76 2.24 -5 5 -5h4Z"
+                <circle
+                  cx={17}
+                  cy={7}
+                  r={1.5}
+                  fill="currentColor"
+                  fillOpacity={0}
                 >
                   <animate
                     fill="freeze"
-                    attributeName="stroke-dashoffset"
-                    dur="0.6s"
-                    values="72;0"
+                    attributeName="fill-opacity"
+                    begin="1.3s"
+                    dur="0.15s"
+                    values="0;1"
                   ></animate>
-                </path>
-                <path
-                  strokeDasharray={28}
-                  strokeDashoffset={28}
-                  d="M12 8c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4"
+                </circle>
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
                 >
-                  <animate
-                    fill="freeze"
-                    attributeName="stroke-dashoffset"
-                    begin="0.7s"
-                    dur="0.6s"
-                    values="28;0"
-                  ></animate>
-                </path>
-              </g>
-            </svg>
+                  <path
+                    strokeDasharray={72}
+                    strokeDashoffset={72}
+                    d="M16 3c2.76 0 5 2.24 5 5v8c0 2.76 -2.24 5 -5 5h-8c-2.76 0 -5 -2.24 -5 -5v-8c0 -2.76 2.24 -5 5 -5h4Z"
+                  >
+                    <animate
+                      fill="freeze"
+                      attributeName="stroke-dashoffset"
+                      dur="0.6s"
+                      values="72;0"
+                    ></animate>
+                  </path>
+                  <path
+                    strokeDasharray={28}
+                    strokeDashoffset={28}
+                    d="M12 8c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4"
+                  >
+                    <animate
+                      fill="freeze"
+                      attributeName="stroke-dashoffset"
+                      begin="0.7s"
+                      dur="0.6s"
+                      values="28;0"
+                    ></animate>
+                  </path>
+                </g>
+              </svg>
+            </a>
+
             <Image src="/youtube.png" alt="icon" width={16} height={16} />
             <Image src="/pinterest.png" alt="icon" width={16} height={16} />
             <Image src="/x.png" alt="icon" width={16} height={16} />
@@ -186,8 +190,7 @@ const Footer = () => {
       </div>
       {/*  BOTTOM */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-8 mt-16">
-        <div className="font-semibold"
-        >&copy; 2025 Foundich</div>
+        <div className="font-semibold">&copy; 2025 Foundich</div>
         <div className="">
           <div className="">
             <span className="text-gray-500 mr-4 ">Language</span>
