@@ -8,7 +8,6 @@ import Pagination from "./Pagination";
 
 const PRODUCT_PER_PAGE = 16;
 
-// Utility to shuffle array randomly
 const shuffleArray = (array: any[]) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -55,64 +54,70 @@ const ProductList = async ({
 
   return (
     <div className="mt-12 mb-12 flex gap-x-8 gap-y-5 justify-between flex-wrap">
-      {shuffledItems.map((product: products.Product) => (
-        <Link
-          href={`/${product.slug}`}
-          key={product._id}
-          className="w-full sm:w-[45%] lg:w-[22%] shadow-[0_3px_5px_rgba(0,0,0,0.1)] p-4 rounded-2xl flex flex-col justify-between gap-4 h-[395px] overflow-hidden"
-        >
-          {/* Product Image */}
-          <div className="relative w-full h-[250px] sm:h-[40%] sm:min-h-[190px]">
-            <Image
-              src={product.media?.mainMedia?.image?.url || "/product.png"}
-              alt={product.name || "Product image"}
-              fill
-              sizes="25vw"
-              quality={100}
-              className="absolute object-cover rounded-md z-10 hover:opacity-0 transition-opacity ease duration-500"
-            />
-            {product.media?.items?.[1]?.image?.url && (
+      {shuffledItems.length === 0 ? (
+        <p className="text-center w-full text-2xl text-gray-900 font-medium">
+          Product is out of stock
+        </p>
+      ) : (
+        shuffledItems.map((product: products.Product) => (
+          <Link
+            href={`/${product.slug}`}
+            key={product._id}
+            className="w-full sm:w-[45%] lg:w-[22%] shadow-[0_3px_5px_rgba(0,0,0,0.1)] p-4 rounded-2xl flex flex-col justify-between gap-4 h-[395px] overflow-hidden"
+          >
+            {/* Product Image */}
+            <div className="relative w-full h-[250px] sm:h-[40%] sm:min-h-[190px]">
               <Image
-                src={product.media.items[1].image.url}
-                alt={`${product.name} hover image`}
+                src={product.media?.mainMedia?.image?.url || "/product.png"}
+                alt={product.name || "Product image"}
                 fill
                 sizes="25vw"
                 quality={100}
-                className="absolute object-cover rounded-md"
+                className="absolute object-cover rounded-md z-10 hover:opacity-0 transition-opacity ease duration-500"
+              />
+              {product.media?.items?.[1]?.image?.url && (
+                <Image
+                  src={product.media.items[1].image.url}
+                  alt={`${product.name} hover image`}
+                  fill
+                  sizes="25vw"
+                  quality={100}
+                  className="absolute object-cover rounded-md"
+                />
+              )}
+            </div>
+
+            {/* Name and Price */}
+            <div className="flex justify-between text-sm font-medium">
+              <span className="text-[14px] font-bold">{product.name}</span>
+              <span className="font-semibold text-found">₦{product.price?.price}</span>
+            </div>
+
+            {/* Short Description */}
+            {product.additionalInfoSections && (
+              <div
+                className="text-sm text-gray-600 overflow-hidden line-clamp-3 pb-8"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(
+                    decode(
+                      product.additionalInfoSections.find(
+                        (section: any) => section.title === "shortDesc"
+                      )?.description || ""
+                    )
+                  ),
+                }}
               />
             )}
-          </div>
 
-          {/* Name and Price */}
-          <div className="flex justify-between text-sm font-medium">
-            <span className="text-[14px] font-bold">{product.name}</span>
-            <span className="font-semibold text-found">₦{product.price?.price}</span>
-          </div>
-
-          {/* Short Description */}
-          {product.additionalInfoSections && (
-            <div
-              className="text-sm text-gray-600 overflow-hidden line-clamp-3 pb-8"
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(
-                  decode(
-                    product.additionalInfoSections.find(
-                      (section: any) => section.title === "shortDesc"
-                    )?.description || ""
-                  )
-                ),
-              }}
-            />
-          )}
-
-          {/* Add to Cart */}
-          <div className="mt-auto pt-2">
-            <button className="rounded-2xl ring-1 w-max ring-found text-white py-2 px-4 text-sm bg-found hover:text-white">
-              Add to Cart
-            </button>
-          </div>
-        </Link>
-      ))}
+            {/* Add to Cart */}
+            <div className="mt-auto pt-2">
+              <button className="rounded-2xl ring-1 w-max ring-found text-white py-2 px-4 text-sm bg-found hover:text-white">
+                Add to Cart
+              </button>
+            </div>
+          </Link>
+        ))
+      )}
 
       {/* Pagination */}
       <Pagination
