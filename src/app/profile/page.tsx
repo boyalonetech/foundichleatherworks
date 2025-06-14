@@ -84,7 +84,7 @@ const ProfilePage = () => {
   };
 
   const displayedImage = isLoggedIn
-    ? member?.profile?.photo?.url || customImage || "/profile.png"
+    ? member.profilePictureUrl || customImage || "/profile.png"
     : "/profile.png";
 
   return (
