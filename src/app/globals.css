@@ -43,30 +43,26 @@
   visibility: hidden;
 }
 
-
 .fou-nd {
   transition: 0.3s ease-in;
   z-index: 0;
   animation: slide 1.5s linear 1;
-
 }
 
 @keyframes slide {
   from {
-    scale: 0.1;
+    scale: 0.8;
     opacity: 0;
     transform: translateY(-70%) skew(100deg, 100deg);
-
   }
+
   to {
     transform: translateY(0%);
     opacity: 1;
     scale: 0.5;
     transform: skew(0deg, 0deg);
-
   }
 }
-
 
 .fou-nd2 {
   transition: 0.3s ease-out;
@@ -77,12 +73,29 @@
 @keyframes slide2 {
   from {
     transform: translateY(70%);
-    scale: 0.1;
     opacity: 0;
   }
   to {
     transform: translateY(0%);
-    opacity: 1;
-    scale: 1;
+    opacity: 0.5;
+  }
+}
+
+.load {
+  animation: load 2.25s linear 1;
+  transition: 0.5s ease-in-out;
+}
+
+@keyframes load {
+  0% {
+    visibility: hidden;
+  }
+
+  50% {
+    visibility: hidden;
+  }
+
+  100% {
+    visibility: hidden;
   }
 }

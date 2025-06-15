@@ -61,7 +61,7 @@ const Navbar = () => {
                 className="relative cursor-pointer block md:hidden"
                 onClick={cartPage}
               >
-                <Image src="/cart.png" alt="Cart" width={22} height={22} />
+                <Image src="/cart.png" alt="Cart" width={24} height={24} />
                 <div className="absolute -top-3 -right-3 w-6 h-6 bg-found rounded-full text-white text-sm flex items-center justify-center scale-[0.7]">
                   {counter}
                 </div>
