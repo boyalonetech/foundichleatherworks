@@ -109,7 +109,7 @@ const ProductList = async ({
 
           {/* Add to Cart */}
           <div className="mt-auto pt-2">
-            <button className="rounded-2xl ring-1 w-max ring-found text-white py-2 px-4 text-sm bg-found hover:text-white ">
+            <button className="rounded-2xl ring-1 w-max ring-found text-white py-2 px-4 text-sm bg-found hover:text-white transition-transform active:scale-90">
               Add to Cart
             </button>
           </div>
