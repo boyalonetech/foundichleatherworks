@@ -11,7 +11,7 @@ const Footer = () => {
       <div className="flex flex-col md:flex-row justify-center gap-24 ">
         {/* LEFT */}
         <div className="w-full md:w-1/2 lg:w-1/4 flex flex-col gap-8">
-          <Link href="/">
+          <Link href="/home">
             <div className="text-2xl tracking-wide font-bold">Foundich</div>
           </Link>{" "}
           <p>
@@ -121,7 +121,9 @@ const Footer = () => {
 
             <Image src="/youtube.png" alt="icon" width={16} height={16} />
             <Image src="/pinterest.png" alt="icon" width={16} height={16} />
-            <Image src="/x.png" alt="icon" width={16} height={16} />
+            <a href="https://x.com/foundich">
+              <Image src="/x.png" alt="icon" width={16} height={16} />
+            </a>
           </div>
         </div>
         {/* CENTER */}

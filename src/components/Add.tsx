@@ -39,7 +39,7 @@ const Add = ({
     <>
       {/* ✅ Fixed top notification */}
       {showPopup && (
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white text-sm px-6 py-3 rounded-xl shadow-lg z-[1000]">
+        <div className="fixed top-6 left-1/2 transform w-max -translate-x-1/2 bg-green-500 text-white text-sm px-6 py-3 rounded-xl shadow-lg z-[1000]">
           ✅ Item added to cart
         </div>
       )}

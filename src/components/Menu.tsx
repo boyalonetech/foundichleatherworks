@@ -78,8 +78,8 @@ const Menu = () => {
         ref={menuIconRef} // <-- assign ref here
         src="/menu.png"
         alt="menu"
-        width={20}
-        height={20}
+        width={23}
+        height={23}
         className="cursor-pointer"
         onClick={() => setOpen((prev) => !prev)}
       />
@@ -195,8 +195,8 @@ const Menu = () => {
             </svg>
             About
           </span>
-        </Link>
-        <div className="relative cursor-pointer flex gap-4" onClick={cartPage}>
+        </Link>foundich
+        {/* <div className="relative cursor-pointer flex gap-4" onClick={cartPage}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="30px"
@@ -212,7 +212,7 @@ const Menu = () => {
           <div className="absolute -top-3 left-6 w-5 h-5 bg-found rounded-full text-white text-sm flex items-center justify-center">
             {counter}
           </div>
-        </div>
+        </div> */}
 
         <Link href="/profile">
           <span

@@ -26,7 +26,7 @@ const NavIcons = () => {
   const wixClient = useWixClient();
   const isLoggedIn = wixClient.auth.loggedIn();
 
-  const { cart, counter, getCart } = useCartStore();
+  const {  counter, getCart } = useCartStore();
 
   useEffect(() => {
     getCart(wixClient);
@@ -164,6 +164,7 @@ const NavIcons = () => {
           {counter}
         </div>
       </div>
+      
 
       {isCartOpen && <CartModal onClose={() => setIsCartOpen(false)} />}
 
