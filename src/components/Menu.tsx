@@ -195,7 +195,7 @@ const Menu = () => {
             </svg>
             About
           </span>
-        </Link>foundich
+        </Link>
         {/* <div className="relative cursor-pointer flex gap-4" onClick={cartPage}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
