@@ -56,6 +56,7 @@ const Footer = () => {
             </span>
             +2349074833734
           </span>
+          {/* <h3 className="font-semibold text-xl">Follow us</h3> */}
           <div className="flex gap-6">
             <a href="https://www.facebook.com/profile.php?id=100086447977841">
               <Image src="/facebook.png" alt="icon" width={16} height={16} />
@@ -152,13 +153,13 @@ const Footer = () => {
             <h1 className="font-medium text-lg">HELP</h1>
             <div className="flex flex-col gap-6">
               <Link href="/">Customer Service</Link>
-              <Link href="/">My Account</Link>
+              <Link href="/profile">My Account</Link>
               <Link href="/">Legacy & Privacy</Link>
               <Link href="/certification" className="hover:text-found">
                 Certification
               </Link>
               <Link href="/admin" className="flex gap-1 hover:text-found">
-                Admin
+                Security
               </Link>
             </div>
           </div>
