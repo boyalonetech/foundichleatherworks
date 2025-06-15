@@ -4,12 +4,14 @@ import { useState, ChangeEvent } from "react";
 import Script from "next/script";
 import Image from "next/image";
 import { useCartStore } from "@/hooks/useCartStore";
+import { useWixClient } from "@/hooks/useWixClient";
 import { media as wixMedia } from "@wix/sdk";
 
 const CheckoutPage = () => {
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const { cart } = useCartStore();
+  const wixClient = useWixClient();
+  const { cart, clearCart } = useCartStore();
 
   const subtotal =
     cart?.lineItems?.reduce(
@@ -49,7 +51,6 @@ const CheckoutPage = () => {
     }
 
     localStorage.setItem("latestOrder", JSON.stringify(orderData));
-    window.location.href = "/orders";
   };
 
   const handlePay = () => {
@@ -81,16 +82,17 @@ const CheckoutPage = () => {
       customizations: {
         title: "Foundich Payment",
         description: "Order Payment",
-        logo: "https://foundichleatherworks.vercel.app/logo.png", // 👈 Add your logo/icon URL here
+        logo: "https://foundichleatherworks.vercel.app/logo.png",
       },
 
-      callback: function (response: any) {
-        alert(
-          `Getting Your Order Details ✅ Transaction ID: ${response.transaction_id}`
-        );
-        sendOrderDetails(response.transaction_id);
+      callback: async function (response: any) {
+        alert(`Getting Your Order Details ✅ Transaction ID: ${response.transaction_id}`);
+        await sendOrderDetails(response.transaction_id);
+        await clearCart(wixClient); // ✅ clear cart after payment
         setIsProcessing(false);
+        window.location.href = "/orders"; // ✅ redirect
       },
+
       onclose: function () {
         alert("Payment Closed ❌.");
         setIsProcessing(false);
@@ -112,22 +114,10 @@ const CheckoutPage = () => {
       {/* Delivery Details */}
       <div className="space-y-4">
         <h2 className="text-2xl font-bold text-found flex gap-2 items-center">
-          {" "}
           <span className="text-2xl">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width={40}
-              height={40}
-              viewBox="0 0 24 24"
-            >
-              <path
-                fill="currentColor"
-                d="M19 10.35V5h-5v2h3v2.65L13.52 14H10V9H2v7h2c0 1.66 1.34 3 3 3s3-1.34 3-3h4.48zM7 17c-.55 0-1-.45-1-1h2c0 .55-.45 1-1 1"
-              ></path>
-              <path
-                fill="currentColor"
-                d="M5 6h5v2H5zm14 7c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3m0 4c-.55 0-1-.45-1-1s.45-1 1-1s1 .45 1 1s-.45 1-1 1"
-              ></path>
+            <svg xmlns="http://www.w3.org/2000/svg" width={40} height={40} viewBox="0 0 24 24">
+              <path fill="currentColor" d="M19 10.35V5h-5v2h3v2.65L13.52 14H10V9H2v7h2c0 1.66 1.34 3 3 3s3-1.34 3-3h4.48zM7 17c-.55 0-1-.45-1-1h2c0 .55-.45 1-1 1" />
+              <path fill="currentColor" d="M5 6h5v2H5zm14 7c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3m0 4c-.55 0-1-.45-1-1s.45-1 1-1s1 .45 1 1s-.45 1-1 1" />
             </svg>
           </span>
           Delivery Details
@@ -190,7 +180,7 @@ const CheckoutPage = () => {
           cart.lineItems.map((item) => (
             <div
               key={item._id}
-              className="flex gap-4 items-center border p-3 rounded-lg bg-gray-50]"
+              className="flex gap-4 items-center border p-3 rounded-lg bg-gray-50"
             >
               <Image
                 src={
@@ -205,12 +195,8 @@ const CheckoutPage = () => {
               />
               <div className="flex-1">
                 <h3 className="font-semibold">{item.productName?.original}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Qty: {item.quantity}
-                </p>
-                <p className="text-sm font-medium text-found">
-                  ₦{item.price?.amount}
-                </p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Qty: {item.quantity}</p>
+                <p className="text-sm font-medium text-found">₦{item.price?.amount}</p>
               </div>
             </div>
           ))
@@ -232,25 +218,9 @@ const CheckoutPage = () => {
       >
         {isProcessing ? (
           <>
-            <svg
-              className="animate-spin h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-              ></path>
+            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
             </svg>
             Processing...
           </>
