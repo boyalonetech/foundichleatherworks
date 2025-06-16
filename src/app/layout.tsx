@@ -10,9 +10,10 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "FOUNDICH Leather Works",
-  description: "An E-commerce Website for home-made leather",
+  description:
+    "Discover premium handmade leather shoes at Foundich Leather Works – crafted with style, comfort, and durability in mind. Shop timeless designs perfect for every occasion. Fast delivery, secure checkout, and quality you can trust. ",
   icons: {
-    icon: "/favicon.ico", // Favicon path 
+    icon: "/favicon.ico", // Favicon path
   },
 };
 
