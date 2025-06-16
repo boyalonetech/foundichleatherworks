@@ -33,7 +33,7 @@ const LoadingScreen: React.FC = () => {
         </div>
 
         {/* Loading Text */}
-        <p className="mt-6 text-lg font-semibold text-gray-700 animate-pulse load">
+        <p className="mt-6 text-lg font-semibold text-gray-700 load animate-pulse">
           Loading...
         </p>
 
