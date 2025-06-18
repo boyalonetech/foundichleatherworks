@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { WixClientContextProvider } from "@/context/wixContext";
 import BottomNavTablet from "@/components/BottomNavTablet";
+import ChatBot from "@/components/ChatBot";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,8 @@ export default function RootLayout({
         <WixClientContextProvider>
           <Navbar />
           {children}
+          <ChatBot />
+
           <Footer />
           <BottomNavTablet />
         </WixClientContextProvider>

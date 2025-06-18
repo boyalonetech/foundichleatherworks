@@ -39,7 +39,6 @@ const HomePage = async () => {
         </Suspense>
       </div>
 
-      <ChatBot />
 
     </div>
   );
