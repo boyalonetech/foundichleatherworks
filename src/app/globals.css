@@ -99,3 +99,7 @@
     visibility: hidden;
   }
 }
+
+.metar {
+  scale: 10;
+}

@@ -39,10 +39,11 @@ const AIAssistantIcon = () => {
         ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center justify-center w-12 h-12 rounded-full ${
-          isOpen ? "md:bg-gray-500 bg:none" : "bg-found hover:bg-found"
-        } text-white shadow-lg transition-all duration-300 hover:scale-110`}
+          isOpen ? "bg-gray-500" : "bg-found hover:bg-found"
+        } text-white shadow-lg transition-all duration-300 hover:scale-110 ${
+          isOpen ? "md:translate-x-[-725%]" : "md:translate-x-0"
+        }`}
         aria-label={isOpen ? "Close assistant" : "Open assistant"}
-        style={{ transform: isOpen ? "translate(-750%)" : "translate(0%)" }}
       >
         {isOpen ? (
           <svg
@@ -50,8 +51,6 @@ const AIAssistantIcon = () => {
             width={35}
             height={35}
             viewBox="0 0 24 24"
-            className="hidden md:block"
-
           >
             <path
               fill="none"
@@ -81,9 +80,7 @@ const AIAssistantIcon = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div
-          ref={chatWindowRef}
-        >
+        <div ref={chatWindowRef}>
           {/* Header with Close Button */}
           <div className=" hidden justify-between items-center p-3 bg-gray-100 border-b">
             <h3 className="font-semibold">AI Assistant</h3>
