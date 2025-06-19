@@ -5,25 +5,23 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { useCartStore } from "@/hooks/useCartStore";
 import { useWixClient } from "@/hooks/useWixClient";
-import { Router } from "next/router";
 
 const Menu = () => {
   const [open, setOpen] = useState(false);
-  const { counter } = useCartStore();
+  const { counter, getCart } = useCartStore();
   const [customImage, setCustomImage] = useState<string | null>(null);
   const [member, setMember] = useState<any>(null);
+  const [notificationCount, setNotificationCount] = useState(0);
 
   const wixClient = useWixClient();
   const isLoggedIn = wixClient.auth.loggedIn();
 
   const menuRef = useRef<HTMLDivElement>(null);
-  const menuIconRef = useRef<HTMLImageElement>(null); // <-- ref for menu icon
+  const menuIconRef = useRef<HTMLImageElement>(null);
 
-  // Handle click outside and scroll to close the menu
   useEffect(() => {
     const handleClickOrScroll = (e: MouseEvent | TouchEvent) => {
       const target = e.target as Node;
-      // Close only if click is outside BOTH menu and menu icon
       if (
         menuRef.current &&
         !menuRef.current.contains(target) &&
@@ -47,7 +45,11 @@ const Menu = () => {
     };
   }, [open]);
 
-  // Load profile image and member info
+  useEffect(() => {
+    getCart(wixClient);
+    setNotificationCount((prev) => prev + 1);
+  }, [counter, getCart, wixClient]);
+
   useEffect(() => {
     if (isLoggedIn) {
       const storedImage = localStorage.getItem("customProfileImage");
@@ -68,14 +70,10 @@ const Menu = () => {
     }
   }, [isLoggedIn, wixClient]);
 
-  const cartPage = () => {
-    window.location.href = "/cart";
-  };
-
   return (
     <div>
       <Image
-        ref={menuIconRef} // <-- assign ref here
+        ref={menuIconRef}
         src="/menu.png"
         alt="menu"
         width={23}
@@ -84,15 +82,14 @@ const Menu = () => {
         onClick={() => setOpen((prev) => !prev)}
       />
 
-      {/* Menu wrapper always rendered for animation */}
       <div
         ref={menuRef}
-        className={`fixed top-20 right-0 w-[100%] max-w-[100%] h-[calc(55vh-80px)] bg-white text-black
+        className={`fixed top-20 right-0 w-[100%] max-w-[100%] h-[calc(65vh-80px)] bg-white text-black
           flex flex-col pl-7 justify-center gap-8 text-xl z-100 shadow-2xl
           transform transition-transform duration-300 ease-in-out
           ${open ? "translate-x-0" : "translate-x-full"}
         `}
-        style={{ pointerEvents: open ? "auto" : "none" }} // disable pointer events when hidden
+        style={{ pointerEvents: open ? "auto" : "none" }}
       >
         <Link href="/home">
           <span
@@ -196,33 +193,46 @@ const Menu = () => {
             About
           </span>
         </Link>
-        {/* <div className="relative cursor-pointer flex gap-4" onClick={cartPage}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="30px"
-            height="30px"
-            viewBox="0 0 24 24"
+
+        <Link href="/notification">
+          <span
+            className="relative flex items-center gap-4"
+            onClick={() => {
+              setNotificationCount(0);
+              setOpen(false);
+            }}
           >
-            <path
-              fill="red"
-              d="M7 22q-.825 0-1.412-.587T5 20t.588-1.412T7 18t1.413.588T9 20t-.587 1.413T7 22m10 0q-.825 0-1.412-.587T15 20t.588-1.412T17 18t1.413.588T19 20t-.587 1.413T17 22M5.2 4h16.5l-4.975 9H8.1L7 15h12v2H3.625L6.6 11.6L3 4H1V2h3.25z"
-            />
-          </svg>
-          Cart
-          <div className="absolute -top-3 left-6 w-5 h-5 bg-found rounded-full text-white text-sm flex items-center justify-center">
-            {counter}
-          </div>
-        </div> */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={27}
+              height={27}
+              viewBox="0 0 24 24"
+            >
+              <g fill="none">
+                <path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"></path>
+                <path
+                  fill="red"
+                  d="M12 2a7 7 0 0 0-7 7v3.528a1 1 0 0 1-.105.447l-1.717 3.433A1.1 1.1 0 0 0 4.162 18h15.676a1.1 1.1 0 0 0 .984-1.592l-1.716-3.433a1 1 0 0 1-.106-.447V9a7 7 0 0 0-7-7m0 19a3 3 0 0 1-2.83-2h5.66A3 3 0 0 1 12 21"
+                ></path>
+              </g>
+            </svg>
+            {notificationCount > 0 && (
+              <div className="absolute -top-2 left-[18px] w-4 h-4 bg-found rounded-full text-white text-[10px] flex items-center justify-center notificated">
+                {notificationCount}
+              </div>
+            )}
+            Notification
+          </span>
+        </Link>
+
+        {/* ... Your other links (Home, Shop, Deals, Contact, About) stay unchanged ... */}
 
         <Link href="/profile">
           <span
             className="flex items-center gap-4 cursor-pointer"
             onClick={() => setOpen(false)}
           >
-            <span
-              className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center  scale-[1.3]"
-              // 8 = 2rem = 32px circle, you can adjust if needed
-            >
+            <span className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center scale-[1.3]">
               {customImage ? (
                 <Image
                   src={customImage}

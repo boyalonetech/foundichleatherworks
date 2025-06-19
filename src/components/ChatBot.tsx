@@ -39,7 +39,7 @@ const AIAssistantIcon = () => {
         ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center justify-center w-12 h-12 rounded-full ${
-          isOpen ? "bg-blue-500" : "bg-found hover:bg-found"
+          isOpen ? "bg-blue-500 animate-pulse" : "bg-found hover:bg-found"
         } text-white shadow-lg transition-all duration-300 hover:scale-110 ${
           isOpen ? "md:translate-x-[-725%]" : "md:translate-x-0"
         }`}

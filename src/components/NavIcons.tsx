@@ -17,6 +17,7 @@ const NavIcons = () => {
   const [member, setMember] = useState<any>(null);
   const [customImage, setCustomImage] = useState<string | null>(null);
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(0);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -26,11 +27,13 @@ const NavIcons = () => {
   const wixClient = useWixClient();
   const isLoggedIn = wixClient.auth.loggedIn();
 
-  const {  counter, getCart } = useCartStore();
+  const { counter, getCart } = useCartStore();
 
   useEffect(() => {
     getCart(wixClient);
-  }, [wixClient, getCart]);
+    // Assume any change in cart triggers a new notification
+    setNotificationCount((prev) => prev + 1);
+  }, [counter, getCart, wixClient]);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -134,7 +137,11 @@ const NavIcons = () => {
         </div>
       )}
 
-      <Link href="/notification" className="relative cursor-pointer md:hidden lg:block">
+      <Link
+        href="/notification"
+        className="relative cursor-pointer md:block hidden"
+        onClick={() => setNotificationCount(0)}
+      >
         <Image
           src="/notification.png"
           alt="Notifications"
@@ -142,7 +149,11 @@ const NavIcons = () => {
           height={22}
           className="cursor-pointer"
         />
-        <div className="absolute -top-1 -right-1 w-3 h-3 bg-found rounded-full text-white text-sm flex items-center justify-center scale-[0.7]"></div>
+        {notificationCount > 0 && (
+          <div className="absolute -top-1 -right-1 w-4 h-4 bg-found rounded-full text-white text-[10px] flex items-center justify-center notificated">
+            {notificationCount}
+          </div>
+        )}
       </Link>
 
       <div
@@ -164,7 +175,6 @@ const NavIcons = () => {
           {counter}
         </div>
       </div>
-      
 
       {isCartOpen && <CartModal onClose={() => setIsCartOpen(false)} />}
 
