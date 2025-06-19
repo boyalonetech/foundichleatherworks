@@ -23,19 +23,12 @@ const AIAssistantIcon = () => {
       }
     };
 
-    // Close when scrolling
-    const handleScroll = () => {
-      setIsOpen(false);
-    };
-
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
-      window.addEventListener("scroll", handleScroll, { passive: true });
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-      window.removeEventListener("scroll", handleScroll);
     };
   }, [isOpen]);
 
@@ -46,9 +39,10 @@ const AIAssistantIcon = () => {
         ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center justify-center w-12 h-12 rounded-full ${
-          isOpen ? "bg-gray-500" : "bg-found hover:bg-found"
+          isOpen ? "md:bg-gray-500 bg:none" : "bg-found hover:bg-found"
         } text-white shadow-lg transition-all duration-300 hover:scale-110`}
         aria-label={isOpen ? "Close assistant" : "Open assistant"}
+        style={{ transform: isOpen ? "translate(-750%)" : "translate(0%)" }}
       >
         {isOpen ? (
           <svg
@@ -56,6 +50,8 @@ const AIAssistantIcon = () => {
             width={35}
             height={35}
             viewBox="0 0 24 24"
+            className="hidden md:block"
+
           >
             <path
               fill="none"
@@ -87,10 +83,9 @@ const AIAssistantIcon = () => {
       {isOpen && (
         <div
           ref={chatWindowRef}
-          className="absolute bottom-20 right-0 w-80 h-96 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden flex flex-col"
         >
           {/* Header with Close Button */}
-          <div className="flex justify-between items-center p-3 bg-gray-100 border-b">
+          <div className=" hidden justify-between items-center p-3 bg-gray-100 border-b">
             <h3 className="font-semibold">AI Assistant</h3>
             <button
               onClick={() => setIsOpen(false)}
@@ -114,7 +109,7 @@ const AIAssistantIcon = () => {
             </button>
           </div>
 
-          <div className="flex-1">
+          <div className="">
             <ChatBot />
           </div>
         </div>
