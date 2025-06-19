@@ -103,7 +103,7 @@ export default function ContactPage() {
           </a>
 
           <a
-            href="https://wa.me/2348161514098"
+            href="https://wa.me/2349074833734"
             target="_blank"
             className="bg-gray-100 p-6 rounded-2xl shadow-md flex items-center space-x-4"
           >
