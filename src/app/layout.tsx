@@ -62,7 +62,7 @@ export const metadata: Metadata = {
       "Discover premium handmade leather shoes crafted for style, comfort & durability.",
     images: ["https://www.foundich.com/twitter-image.jpg"],
   },
-  metadataBase: new URL("https://www.foundich.vercel.app"),
+  metadataBase: new URL("https://www.foundichleatherworks.vercel.app"),
   alternates: {
     canonical: "/",
   },

@@ -41,7 +41,7 @@ const AIAssistantIcon = () => {
         className={`flex items-center justify-center w-12 h-12 rounded-full ${
           isOpen ? "bg-blue-500 animate-pulse" : "bg-found hover:bg-found"
         } text-white shadow-lg transition-all duration-300 hover:scale-110 ${
-          isOpen ? "md:translate-x-[-725%]" : "md:translate-x-0"
+          isOpen ? "md:translate-x-[-725%] rotate-[180deg]" : "md:translate-x-0"
         }`}
         aria-label={isOpen ? "Close assistant" : "Open assistant"}
       >

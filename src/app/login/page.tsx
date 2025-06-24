@@ -124,7 +124,7 @@ const LoginPage = () => {
           break;
         default:
           break;
-      }
+      } 
 
       switch (response?.loginState) {
         case LoginState.SUCCESS:

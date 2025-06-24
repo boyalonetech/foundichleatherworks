@@ -1,7 +1,4 @@
-// "use client";
-
 import CategoryList from "@/components/CategoryList";
-import ChatBot from "@/components/ChatBot";
 import LoadingScreen from "@/components/LoadingScreen";
 import ProductListHome from "@/components/ProductListHome";
 import Slider from "@/components/Slider";
@@ -38,8 +35,6 @@ const HomePage = async () => {
           />
         </Suspense>
       </div>
-
-
     </div>
   );
 };
