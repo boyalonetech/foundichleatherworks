@@ -30,7 +30,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="h-[10vh] md:h-24 lg:h-[10vh] px-4 md:px-8 shadow-[0_2px_3px_rgba(0,0,0,0.4)] fixed md:static top-0 left-0 w-full z-50 bg-white md:relative flex flex-col justify-center">
+    <div className="h-[10vh] md:h-24 lg:h-[10vh] px-4 md:px-8 shadow-md fixed md:static top-0 left-0 w-full z-50 bg-white md:relative flex flex-col justify-center">
       {/* Mobile */}
       {!isSearch && (
         <div className="h-full flex items-center justify-between md:hidden nav">
@@ -73,30 +73,7 @@ const Navbar = () => {
         </div>
       )}
 
-      {isSearch && (
-        <div className="flex gap-1 items-center anime">
-          <button
-            type="button"
-            onClick={() => setIsSearch(false)}
-            className="ml-2 p-1 rounded-full hover:bg-gray-300 h-10  text-gray-600"
-            title="Cancel"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width={30}
-              height={30}
-              viewBox="0 0 512 512"
-            >
-              <path
-                fill="currentColor"
-                fillRule="evenodd"
-                d="M420.48 121.813L390.187 91.52L256 225.92L121.813 91.52L91.52 121.813L225.92 256L91.52 390.187l30.293 30.293L256 286.08l134.187 134.4l30.293-30.293L286.08 256z"
-              ></path>
-            </svg>
-          </button>
-          <SearchBarMobile />
-        </div>
-      )}
+      {isSearch && <SearchBarMobile onCancel={() => setIsSearch(false)} />}
 
       {/* Desktop */}
       <div className="hidden md:flex items-center h-full justify-between gap-8">

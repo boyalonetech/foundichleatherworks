@@ -59,7 +59,7 @@ const ProductList = async ({
         <Link
           href={`/${product.slug}`}
           key={product._id}
-          className="w-full sm:w-[45%] lg:w-[22%] shadow-[0_3px_5px_rgba(0,0,0,0.1)] p-4 rounded-2xl flex flex-col justify-between gap-4 h-[395px] overflow-hidden"
+          className="w-full sm:w-[48%] lg:w-[23%] shadow-[0_3px_5px_rgba(0,0,0,0.1)] p-4 rounded-2xl flex flex-col justify-between gap-4 h-[395px] overflow-hidden"
         >
           {/* Product Image */}
           <div className="relative w-full h-[250px] sm:h-[40%] sm:min-h-[190px]">
@@ -67,7 +67,7 @@ const ProductList = async ({
               src={product.media?.mainMedia?.image?.url || "/product.png"}
               alt={product.name || "Product image"}
               fill
-              sizes="25vw"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 25vw"
               quality={100}
               className="absolute object-cover rounded-md z-10 hover:opacity-0 transition-opacity ease duration-500"
             />
@@ -76,7 +76,7 @@ const ProductList = async ({
                 src={product.media.items[1].image.url}
                 alt={`${product.name} hover image`}
                 fill
-                sizes="25vw"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 25vw"
                 quality={100}
                 className="absolute object-cover rounded-md"
               />

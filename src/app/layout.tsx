@@ -6,6 +6,9 @@ import Footer from "@/components/Footer";
 import { WixClientContextProvider } from "@/context/wixContext";
 import BottomNavTablet from "@/components/BottomNavTablet";
 import ChatBot from "@/components/ChatBot";
+import HideLayoutWrapper from "@/app/HideLayoutWrapper";
+// OR if you use the second approach:
+// import LayoutController, { useLayout } from "@/components/LayoutController";
 
 // Preload and optimize font loading
 const inter = Inter({
@@ -67,8 +70,27 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   verification: {
-    google: "your-google-verification-code", // Add your Google Search Console code
+    google: "your-google-verification-code",
   },
+};
+
+// If you want to use the context approach, create this component:
+const LayoutContent = ({ children }: { children: React.ReactNode }) => {
+  // This would be used with the LayoutController approach
+  // const { hideHeader, hideFooter } = useLayout();
+
+  return (
+    <>
+      {/* For simple approach, HideLayoutWrapper handles everything */}
+      <HideLayoutWrapper>
+        <Navbar />
+        <main id="main-content">{children}</main>
+        <ChatBot />
+        <Footer />
+        <BottomNavTablet />
+      </HideLayoutWrapper>
+    </>
+  );
 };
 
 export default function RootLayout({
@@ -84,7 +106,6 @@ export default function RootLayout({
         <meta name="theme-color" content="#ffffff" />
         <link rel="manifest" href="/site.webmanifest" />
         <title>FOUNDICH Leather Works | Premium Handmade Leather Shoes</title>
-        {/* Structured data for rich snippets */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -108,11 +129,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <WixClientContextProvider>
-          <Navbar />
-          <main id="main-content">{children}</main>
-          <ChatBot />
-          <Footer />
-          <BottomNavTablet />
+          <HideLayoutWrapper>{children}</HideLayoutWrapper>
         </WixClientContextProvider>
       </body>
     </html>

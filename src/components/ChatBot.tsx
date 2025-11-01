@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import ChatBot from "./ChatWidget";
+import FoundichAssistant from "@/app/api/python";
 
 const AIAssistantIcon = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,16 +33,26 @@ const AIAssistantIcon = () => {
     };
   }, [isOpen]);
 
+  const ai = () => {
+    if (window.innerWidth < 768) {
+      window.location.href = "/ai";
+    } else {
+      setIsOpen(!isOpen);
+    }
+  };
+
   return (
     <div className="fixed bottom-6 right-6 md:bottom-20 lg:bottom-6 z-40">
       {/* Floating AI Assistant Button */}
       <button
         ref={buttonRef}
-        onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center justify-center w-12 h-12 rounded-full ${
+        onClick={ai}
+        className={`flex items-center justify-center absolute translate-y-5  bottom-6 right-6 md:bottom-20 lg:bottom-6 z-40 w-12 h-12 rounded-full ${
           isOpen ? "bg-blue-500 animate-pulse" : "bg-found hover:bg-found"
         } text-white shadow-lg transition-all duration-300 hover:scale-110 ${
-          isOpen ? "md:translate-x-[-725%] rotate-[180deg]" : "md:translate-x-0"
+          isOpen
+            ? "md:translate-x-[-24rem] rotate-[180deg] "
+            : "md:translate-x-0"
         }`}
         aria-label={isOpen ? "Close assistant" : "Open assistant"}
       >
@@ -106,8 +117,8 @@ const AIAssistantIcon = () => {
             </button>
           </div>
 
-          <div className="">
-            <ChatBot />
+          <div className="rounded-3xl h-[85vh] max-w-[400px] w-full shadow-lg">
+            <FoundichAssistant />
           </div>
         </div>
       )}

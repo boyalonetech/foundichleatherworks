@@ -10,6 +10,9 @@
   scrollbar-width: none;
 }
 
+html {
+  scrollbar-width: none;
+}
 /* ::slotted{
   background-color: blueviolet;
   color: white;
@@ -104,9 +107,8 @@
   scale: 10;
 }
 
-
-.ai{
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
+.ai {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
