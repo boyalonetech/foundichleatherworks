@@ -82,7 +82,7 @@ const FoundichAssistant = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_AI}`,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_AI_GET}`,
         },
         body: JSON.stringify({
           messages: [{ content: currentInput, role: "user" }],
@@ -92,6 +92,8 @@ const FoundichAssistant = () => {
         }),
       });
       const data = await response.json();
+      const check = process.env.NEXT_PUBLIC_AI;
+      console.log(check);
 
       const botResponse =
         data.text ||
