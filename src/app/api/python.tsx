@@ -82,7 +82,7 @@ const FoundichAssistant = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_AI_KEY}`,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_AI}`,
         },
         body: JSON.stringify({
           messages: [{ content: currentInput, role: "user" }],
