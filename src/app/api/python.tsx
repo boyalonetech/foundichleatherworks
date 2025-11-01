@@ -3,13 +3,19 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import allEmojis from "./chatdatabase";
-import { fstat } from "fs";
 
 interface Message {
   id: string;
   text: string;
   sender: "user" | "bot";
   timestamp: Date;
+}
+
+interface ChatHistory {
+  id: string;
+  messages: Message[];
+  createdAt: Date;
+  title: string;
 }
 
 const FoundichAssistant = () => {
@@ -31,6 +37,93 @@ const FoundichAssistant = () => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [emojiSearch, setEmojiSearch] = useState("");
   const [isOpen] = useState(true);
+  const [showHistory, setShowHistory] = useState(false);
+  const [chatHistories, setChatHistories] = useState<ChatHistory[]>([]);
+  const [currentChatId, setCurrentChatId] = useState<string>(() =>
+    Date.now().toString()
+  );
+
+  // Initialize IndexedDB
+  useEffect(() => {
+    initializeDB();
+    loadChatHistories();
+  }, []);
+
+  const initializeDB = () => {
+    const request = indexedDB.open("FoundichChatDB", 1);
+
+    request.onupgradeneeded = (event) => {
+      const db = (event.target as IDBOpenDBRequest).result;
+      if (!db.objectStoreNames.contains("chatHistories")) {
+        const store = db.createObjectStore("chatHistories", { keyPath: "id" });
+        store.createIndex("createdAt", "createdAt", { unique: false });
+      }
+    };
+  };
+
+  const saveChatToDB = async (chatHistory: ChatHistory) => {
+    return new Promise<void>((resolve, reject) => {
+      const request = indexedDB.open("FoundichChatDB", 1);
+
+      request.onsuccess = (event) => {
+        const db = (event.target as IDBOpenDBRequest).result;
+        const transaction = db.transaction(["chatHistories"], "readwrite");
+        const store = transaction.objectStore("chatHistories");
+
+        const putRequest = store.put(chatHistory);
+
+        putRequest.onsuccess = () => resolve();
+        putRequest.onerror = () => reject(putRequest.error);
+      };
+
+      request.onerror = () => reject(request.error);
+    });
+  };
+
+  const loadChatHistories = async () => {
+    return new Promise<void>((resolve, reject) => {
+      const request = indexedDB.open("FoundichChatDB", 1);
+
+      request.onsuccess = (event) => {
+        const db = (event.target as IDBOpenDBRequest).result;
+        const transaction = db.transaction(["chatHistories"], "readonly");
+        const store = transaction.objectStore("chatHistories");
+        const getAllRequest = store.getAll();
+
+        getAllRequest.onsuccess = () => {
+          const histories = getAllRequest.result.sort(
+            (a: ChatHistory, b: ChatHistory) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
+          setChatHistories(histories);
+          resolve();
+        };
+
+        getAllRequest.onerror = () => reject(getAllRequest.error);
+      };
+
+      request.onerror = () => reject(request.error);
+    });
+  };
+
+  const deleteChatFromDB = async (chatId: string) => {
+    return new Promise<void>((resolve, reject) => {
+      const request = indexedDB.open("FoundichChatDB", 1);
+
+      request.onsuccess = (event) => {
+        const db = (event.target as IDBOpenDBRequest).result;
+        const transaction = db.transaction(["chatHistories"], "readwrite");
+        const store = transaction.objectStore("chatHistories");
+
+        const deleteRequest = store.delete(chatId);
+
+        deleteRequest.onsuccess = () => resolve();
+        deleteRequest.onerror = () => reject(deleteRequest.error);
+      };
+
+      request.onerror = () => reject(request.error);
+    });
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -62,6 +155,27 @@ const FoundichAssistant = () => {
     }
   }, [inputMessage]);
 
+  // Auto-save chat when messages change (with debouncing)
+  useEffect(() => {
+    if (messages.length > 1) {
+      const timeoutId = setTimeout(() => {
+        const chatTitle =
+          messages.find((msg) => msg.sender === "user")?.text.slice(0, 30) +
+            "..." || "New Chat";
+        const chatHistory: ChatHistory = {
+          id: currentChatId,
+          messages: messages,
+          createdAt: new Date(),
+          title: chatTitle,
+        };
+        saveChatToDB(chatHistory);
+        loadChatHistories(); // Refresh the history list
+      }, 1000);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [messages, currentChatId]);
+
   const sendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
 
@@ -92,8 +206,6 @@ const FoundichAssistant = () => {
         }),
       });
       const data = await response.json();
-      const check = process.env.NEXT_PUBLIC_AI;
-      console.log(check);
 
       const botResponse =
         data.text ||
@@ -131,6 +243,26 @@ const FoundichAssistant = () => {
     }
   };
 
+  // Format time for messages
+  const formatMessageTime = (timestamp: Date) => {
+    return new Date(timestamp).toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
+
+  // Format date for chat history
+  const formatDate = (date: Date) => {
+    return new Date(date).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
   // Option handlers
   const handleDeleteChat = () => {
     setMessages([
@@ -141,6 +273,7 @@ const FoundichAssistant = () => {
         timestamp: new Date(),
       },
     ]);
+    setCurrentChatId(Date.now().toString());
     setShowOptions(false);
   };
 
@@ -151,33 +284,43 @@ const FoundichAssistant = () => {
   };
 
   const handleViewChatHistory = () => {
-    // Implement chat history functionality here
-    alert("Chat history feature would be implemented here");
+    setShowHistory(true);
     setShowOptions(false);
   };
 
   const handleNewChat = () => {
-    handleDeleteChat(); // Same functionality as delete for now
+    handleDeleteChat();
     setShowOptions(false);
   };
 
-  // Add click outside handler to close emoji picker
-  // useEffect(() => {
-  //   const handleClickOutside = (event: MouseEvent) => {
-  //     const target = event.target as HTMLElement;
-  //     if (showEmojiPicker && !target.closest(".emoji-picker-container")) {
-  //       setShowEmojiPicker(false);
-  //       setEmojiSearch("");
-  //     }
-  //   };
+  const handleLoadChat = (chatHistory: ChatHistory) => {
+    setMessages(chatHistory.messages);
+    setCurrentChatId(chatHistory.id);
+    setShowHistory(false);
+  };
 
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => document.removeEventListener("mousedown", handleClickOutside);
-  // }, [showEmojiPicker]);
+  const handleDeleteHistory = async (
+    chatId: string,
+    event: React.MouseEvent
+  ) => {
+    event.stopPropagation();
+    if (confirm("Are you sure you want to delete this chat history?")) {
+      try {
+        await deleteChatFromDB(chatId);
+        await loadChatHistories();
+        if (chatId === currentChatId) {
+          handleNewChat();
+        }
+      } catch (error) {
+        console.error("Error deleting chat history:", error);
+        alert("Error deleting chat history");
+      }
+    }
+  };
 
   return (
     <section
-      className={`flex flex-col h-screen lg:h-full  rounded-3xl bg-[#fcfeff] ${
+      className={`flex flex-col h-screen md:h-full rounded-3xl bg-[#fcfeff] ${
         isOpen ? "" : "hidden"
       }`}
     >
@@ -313,11 +456,9 @@ const FoundichAssistant = () => {
                 View History
               </button>
 
-              <div className="border-t border-gray-100 my-1"></div>
-
               <button
                 onClick={handleEndChat}
-                className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2 text-red-600"
+                className="w-full hidden px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2 text-red-600"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -341,40 +482,183 @@ const FoundichAssistant = () => {
         </div>
       </header>
 
+      {/* CHAT HISTORY MODAL */}
+      {showHistory && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[80vh] flex flex-col">
+            <div className="p-6 border-b border-gray-200 flex justify-between items-center">
+              <h2 className="text-lg font-semibold">Chat History</h2>
+              <button
+                onClick={() => setShowHistory(false)}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto p-6">
+              {chatHistories.length === 0 ? (
+                <div className="text-center text-gray-500 py-8">
+                  No chat history found
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {chatHistories.map((chat) => (
+                    <div
+                      key={chat.id}
+                      className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-colors"
+                      onClick={() => handleLoadChat(chat)}
+                    >
+                      <div className="flex justify-between items-start">
+                        <div className="flex-1">
+                          <h3 className="font-medium text-sm truncate">
+                            {chat.title}
+                          </h3>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {formatDate(chat.createdAt)}
+                          </p>
+                          <p className="text-xs text-gray-600 mt-2 line-clamp-2">
+                            {chat.messages.find((m) => m.sender === "user")
+                              ?.text || "No messages"}
+                          </p>
+                        </div>
+                        <button
+                          onClick={(e) => handleDeleteHistory(chat.id, e)}
+                          className="text-red-500 hover:text-red-700 ml-2 p-1 transition-colors"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M3 6h18" />
+                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* CHAT AREA */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-hide">
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`flex ${
-              message.sender === "user" ? "justify-end" : "justify-start"
+            className={`flex flex-col ${
+              message.sender === "user" ? "items-end" : "items-start"
             }`}
           >
-            <div
-              className={`max-w-[80%] p-3 rounded-2xl text-sm shadow-sm ${
-                message.sender === "user"
-                  ? "bg-red-600 text-white rounded-br-none"
-                  : "bg-white text-gray-900 rounded-bl-none border border-gray-100"
-              }`}
-            >
-              {message.text}
+            <div className="flex flex-col max-w-[80%]">
+              {/* Message Bubble */}
+              <div
+                className={`p-3 rounded-2xl text-sm shadow-sm ${
+                  message.sender === "user"
+                    ? "bg-red-600 text-white rounded-br-none"
+                    : "bg-white text-gray-900 rounded-bl-none border border-gray-100"
+                }`}
+              >
+                {message.text}
+              </div>
+
+              {/* Timestamp */}
+              <div
+                className={`flex items-center gap-1 mt-1 px-1 text-xs ${
+                  message.sender === "user"
+                    ? "justify-end text-gray-500"
+                    : "justify-start text-gray-400"
+                }`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="opacity-70"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+                <span className="opacity-70">
+                  {formatMessageTime(message.timestamp)}
+                </span>
+                {message.sender === "user" && (
+                  <span className="opacity-70">• Sent</span>
+                )}
+                {message.sender === "bot" && (
+                  <span className="opacity-70">• Received</span>
+                )}
+              </div>
             </div>
           </div>
         ))}
 
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-white border border-gray-100 rounded-2xl p-3 shadow-sm max-w-[80%]">
-              <div className="flex gap-1">
-                <div className="w-2 h-2 bg-red-600 rounded-full animate-bounce"></div>
-                <div
-                  className="w-2 h-2 bg-red-600 rounded-full animate-bounce"
-                  style={{ animationDelay: "0.1s" }}
-                ></div>
-                <div
-                  className="w-2 h-2 bg-red-600 rounded-full animate-bounce"
-                  style={{ animationDelay: "0.2s" }}
-                ></div>
+            <div className="flex flex-col max-w-[80%]">
+              <div className="bg-white border border-gray-100 rounded-2xl p-3 shadow-sm">
+                <div className="flex gap-1">
+                  <div className="w-2 h-2 bg-red-600 rounded-full animate-bounce"></div>
+                  <div
+                    className="w-2 h-2 bg-red-600 rounded-full animate-bounce"
+                    style={{ animationDelay: "0.1s" }}
+                  ></div>
+                  <div
+                    className="w-2 h-2 bg-red-600 rounded-full animate-bounce"
+                    style={{ animationDelay: "0.2s" }}
+                  ></div>
+                </div>
+              </div>
+              {/* Loading timestamp */}
+              <div className="flex items-center gap-1 mt-1 px-1 text-xs text-gray-400">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="opacity-70"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+                <span className="opacity-70">
+                  {formatMessageTime(new Date())}
+                </span>
+                <span className="opacity-70">• Typing...</span>
               </div>
             </div>
           </div>
@@ -392,7 +676,7 @@ const FoundichAssistant = () => {
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="AsK FOUNDiCH ..."
-              className="flex-1 resize-none bg-transparent text-sm focus:outline-none max-h-32 placeholder:text-gray-400"
+              className="flex-1 resize-none bg-transparent text-sm focus:outline-none max-h-32 placeholder:text-gray-400 scrollbar-hide"
               rows={1}
             />
 
@@ -462,7 +746,7 @@ const FoundichAssistant = () => {
                 </div>
 
                 {/* Emoji Grid */}
-                <div className="p-3 overflow-y-auto flex-1">
+                <div className="p-3 overflow-y-auto flex-1 scrollbar-hide">
                   <div className="grid grid-cols-8 gap-1">
                     {allEmojis
                       .filter(
@@ -510,6 +794,16 @@ const FoundichAssistant = () => {
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </section>
   );
 };

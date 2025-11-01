@@ -47,7 +47,7 @@ const AIAssistantIcon = () => {
       <button
         ref={buttonRef}
         onClick={ai}
-        className={`flex items-center justify-center absolute translate-y-5  bottom-6 right-6 md:bottom-20 lg:bottom-6 z-40 w-12 h-12 rounded-full ${
+        className={`flex items-center justify-center absolute translate-y-5  bottom-6 md:right-6 -right-2 md:bottom-20 lg:bottom-6 z-40 w-12 h-12 rounded-full ${
           isOpen ? "bg-blue-500 animate-pulse" : "bg-found hover:bg-found"
         } text-white shadow-lg transition-all duration-300 hover:scale-110 ${
           isOpen
